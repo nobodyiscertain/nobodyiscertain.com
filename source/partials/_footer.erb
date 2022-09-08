@@ -33,7 +33,9 @@
 </script>
 
 <% if environment == :build %>
-<!-- Fathom - beautiful, simple website analytics -->
-<script src="https://cdn.usefathom.com/script.js" site="GQPVCESM" defer></script>
-<!-- / Fathom -->
+<script src="https://getinsights.io/js/insights.js"></script>
+<script>
+insights.init('QSIEkARrWELzcWvR');
+insights.trackPages();
+</script>
 <% end %>
