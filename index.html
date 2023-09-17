@@ -27,17 +27,15 @@ __  __               __            __            _              __            __
   <meta name="twitter:description" content="I love the web and all that it can do. So tell me my friend, really... what can I do for you?">
 
     <link href="images/favicon.ico" rel="icon" type="image/ico" />
-    <link href="stylesheets/styles-9c34ff02.css" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/styles-fbeb2771.css" rel="stylesheet" type="text/css" />
     <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/feed.xml" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   </head>
   <body class="index ">
     <div class="page-wrap">
       <header class="site-header">
         <div class="logo-wrap">
           <a href="/" class="logo-wrap__logo">
-            <img class="logo" alt="Jamie Wagner Logo" src="images/jw-logo-tan-a795e4a6.svg" />
-            <h1>Jamie Wagner</h1>
+            <h1>nbdyscrtn</h1>
           </a>
         </div>
         <nav>
@@ -79,7 +77,32 @@ __  __               __            __            _              __            __
 
 <div class="home__dos">
   <div class="container">
-    <h2 class="h1">Proud Work</h2>
+    <h2 class="h1">Engineering Leader</h2>
+    <div class="flex-wrap">
+      <div class="home__do-box">
+        <figure>
+          <a href="https://kajabi.com/" target="_blank">
+            <img alt="Kajabi" width="100%" style="max-width:225px" src="images/kajabi-logo-c154a4ba.svg" />
+          </a>
+        </figure>
+        <div class="do-box__about"><p>I'm currently the Engineering Manager<br>for the Build team at Kajabi. <a target="_blank" href="https://kajabi.com/careers#open-positions">We're Hiring!</a></p></div>
+      </div>
+
+      <div class="home__do-box">
+        <figure>
+          <a href="https://www.dailyminded.com" target="_blank">
+            <img alt="Daily Minded" width="100%" style="max-width:225px" src="images/dailyminded-409357ca.svg" />
+          </a>
+        </figure>
+        <div class="do-box__about"><p>I am the technical <b>co-founder</b> of <a href="https://www.dailyminded.com" target="_blank">Daily Minded</a>:<br>An online journal you might actually keep up with.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="home__dos">
+  <div class="container">
+    <h2 class="h1">Side Hustle</h2>
     <div class="flex-wrap">
       <div class="home__do-box">
         <figure>
@@ -103,27 +126,22 @@ __  __               __            __            _              __            __
 </div>
 
 <div class="home__posts">
-  <div class="container align-left">
+  <div class="container">
     <h2 class="h1">From the Blog</h2>
-    <ul class="blog-posts__list set-height-wrap">
-        <li class="set-height">
+    <div class="grid">
+        <div class="card">
           <a href="/laravel-db-commands/">Laravel DB Commands Package</a>
           <p>A few Artisan commands to help with everyday database tasks.</p>
-        </li>
-        <li class="set-height">
+        </div>
+        <div class="card">
           <a href="/whered-the-pom-go/">Where'd the Pom Go?</a>
           <p>Coming back to and Sticking with the Pomodoro Technique</p>
-        </li>
-        <li class="set-height">
+        </div>
+        <div class="card">
           <a href="/bye-bye-ohlife-hello-my-evening-post/">Bye Bye OhLife. Hello My Evening Post.</a>
           <p>What is one to do when their favorite web app goes away?</p>
-        </li>
-      <li class="set-height"><a href="http://thisbythem.com/blog/introducing-stag-a-command-line-interface-for-statamic/">Introducing Stag</a>
-      <p>A command line interface for Statamic</p>
-      </li>
-      <li class="set-height"><a href="http://thisbythem.com/blog/statamic-realtive-cache-buster/">Statamic: Relative HTML Cache Buster</a></li>
-      <li class="set-height"><a href="http://thisbythem.com/blog/pay-your-estimates/">Pay. Your. Estimates.</a></li>
-    </ul>
+        </div>
+    </div>
   </div>
 </div>
 
@@ -135,34 +153,16 @@ __  __               __            __            _              __            __
     <div class="social-connections">
       <h2>Wanna be friends?</h2>
       <a href="http://twitter.com/nobodyiscertain"><img alt="Twitter Logo" src="images/twitter-8b4f49b0.svg" /></a>
+      <a href="www.linkedin.com/in/nobodyiscertain"><img alt="LinkedIn Logo" src="images/linkedin.svg" /></a>
       <a href="https://github.com/nobodyiscertain"><img alt="GitHub logo" src="images/github-b22a1bbc.svg" /></a>
       <a href="http://instagram.com/nobodyiscertain/"><img alt="Instagram Logo" src="images/instagram-a8e933a2.svg" /></a>
       <a href="mailto:hey@nobodyiscertain.com"><img alt="Email Icon" src="images/icon-mail-8158645e.svg" /></a>
     </div>
     <p class="copyright">
-      Copyright &copy; Jamie Wagner 2023
+      Copyright &copy; nobodyiscertain LLC 2023
     </p>
   </div>
 </footer>
-
-<script>
-  $(document).ready(function(){
-    // Select and loop the container element of the elements you want to equalise
-    $('.set-height-wrap').each(function(){
-      // Cache the highest
-      var highestBox = 0;
-      // Select and loop the elements you want to equalise
-      $('.set-height', this).each(function(){
-        // If this box is higher than the cached highest then store it
-        if($(this).height() > highestBox) {
-          highestBox = $(this).height();
-        }
-      });
-      // Set the height of all those children to whichever was highest
-      $('.set-height',this).height(highestBox);
-    });
-  });
-</script>
 
 <!-- Fathom - beautiful, simple website analytics -->
 <script src="https://cdn.usefathom.com/script.js" site="GQPVCESM" defer></script>
