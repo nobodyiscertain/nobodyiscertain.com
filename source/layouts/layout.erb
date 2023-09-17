@@ -19,7 +19,6 @@ __  __               __            __            _              __            __
     <%= favicon_tag "/images/favicon.ico" %>
     <%= stylesheet_link_tag :styles %>
     <%= feed_tag :atom, "#{blog.options.prefix.to_s}/feed.xml", title: "Atom Feed" %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   </head>
   <body class="<%= page_classes %> <%= current_page.data.layout %>">
     <div class="page-wrap">
