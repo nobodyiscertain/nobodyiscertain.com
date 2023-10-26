@@ -1,54 +1,97 @@
 <div class="hero">
   <div class="hero__image-holder"></div>
   <div class="hero__content">
-    <h1>Howdy</h1>
-    <p>Most folks call me Jamie<br>and I love building things on the web.</p>
+    <h1>Howdy!</h1>
+    <p>Most folks call me Jamie<br>and I love building software and teams.</p>
   </div>
 </div>
 
 <div class="home__intro">
   <div class="container narrow home__intro-content">
     <h2 class="h1">About Me</h2>
-    <p>I've been web'n it up since 2007. When I'm not cutting code:</p>
+    <p>I’ve been building things on the web since I was a teenager. Back when
+      your choice for internet was AOL or Prodigy (We were a Prodigy family)
+      and to connect to it, a call had to be made by a modem. ☎️ </p>
 
-    <ul>
-      <li>I'm a proud father and husband.</li>
-      <li>I think <%= link_to "travelling", "https://wagabonds.family/" %> is <%= link_to "pretty important", "https://www.instagram.com/thewagabonds/" %>.</li>
-      <li>I'm a rabid Big Brother fan.</li>
-      <li>I love to cook.</li>
-      <li>I try to be an <%= link_to "avid reader", "https://www.goodreads.com/nobodyiscertain" %>.</li>
-      <li>I'm a runner.</li>
-      <li>I'm a <%= link_to "music lover", "https://www.last.fm/user/nobodyiscertain" %> & <%= link_to "vinyl collector", "https://www.discogs.com/user/nobodyiscertain" %>.</li>
-      <li>Stand-up comedy is my favorite.</li>
-      <li>The Ice King is the most complex TV character.</li>
-      <li>I pretend to be a music maker.</li>
-      <li>Meditation keeps me sane.</li>
-      <li>Bo Burnham: Inside</li>
-    </ul>
+    <p>I took a little sabbatical from computers to pursue music for a little
+      while, but when that stalled out, I convinced someone to give me money
+      for building them a website in 2007, and thus began a wild and
+      wonderful ride.</p>
+
+    <p>This here, is my personal site.</p>
+
+    <p><b>And here's a few things that keep me busy:</b></p>
   </div>
 </div>
 
-<div class="home__dos">
+<div class="home__intro">
   <div class="container">
-    <h2 class="h1">Proud Work</h2>
-    <div class="flex-wrap">
-      <div class="home__do-box">
-        <figure>
-          <a href="https://kajabi.com/" target="_blank">
-            <%= image_tag "kajabi-logo.svg", alt: "Kajabi", width: "100%", style: "max-width:225px"%>
-          </a>
-        </figure>
-        <div class="do-box__about"><p>I'm currently the Engineering Manager<br>for the Build team at Kajabi. <%= link_to "We're Hiring!", "https://kajabi.com/careers#open-positions", target: "_blank" %></p></div>
-      </div>
+    <figure>
+      <a href="https://kajabi.com/" target="_blank">
+        <%= image_tag "kajabi-logo.svg", alt: "Kajabi", width: "100%", style: "max-width:225px"%>
+      </a>
+    </figure>
+    <div class="do-box__about">
+      <p>
+        I've been at Kajabi for over 6 years. I'm currently a Director of
+        Engineering in charge of the Creator Tools pillar. My teams (and
+        myself) are responsible for the digital products our customers
+        build to build their businesses. So think things like, Courses,
+        Coaching, Podcasts, oh my! We also deal in websites, landing pages,
+        and most of the way they interface with <i>their</i> customers.</p>
 
-      <div class="home__do-box">
-        <figure>
-          <a href="https://www.dailyminded.com" target="_blank">
-            <%= image_tag "dailyminded.svg", alt: "Daily Minded", width: "100%", style: "max-width:225px"%>
-          </a>
-        </figure>
-        <div class="do-box__about"><p>I am the technical <b>co-founder</b> of <a href="https://www.dailyminded.com" target="_blank">Daily Minded</a>:<br>An online journal you might actually keep up with.</p></div>
-      </div>
+      <p>We also handle a majority of Kajabi's mobile apps as well.</p>
+    </div>
+  </div>
+</div>
+
+<div class="home__intro">
+  <div class="container">
+    <figure>
+      <a href="https://www.dailyminded.com" target="_blank">
+        <%= image_tag "kajabi-logo.svg", alt: "Kajabi", width: "100%", style: "max-width:225px"%>
+      </a>
+    </figure>
+    <div class="do-box__about">
+      <p>I am the technical Co-Founder of DailyMinded, a little journaling app
+        that you'll actually keep up with!</p>
+
+      <p>Receive a daily text or email, respond, and BOOM! Journaling
+        complete!</p>
+      <p><a href="https://www.dailyminded.com" target="_blank">Come check us out</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="home__intro">
+  <div class="container">
+    <figure>
+      <a href="https://www.thereluctantem.com" target="_blank">
+        <%= image_tag "kajabi-logo.svg", alt: "Kajabi", width: "100%", style: "max-width:225px"%>
+      </a>
+    </figure>
+    <div class="do-box__about">
+      <p>My jump into management wasn't the easiest. The engineer in me wasn't
+        happy not did I understand the position entirely, but I fumbled my way
+        through it and have to say have found enjoyment at the other end. I
+        write about my journey into and learnings about management at The
+        Reluctant EM website.</p>
+    </div>
+  </div>
+</div>
+
+<div class="home__intro">
+  <div class="container">
+    <figure>
+      <a href="https://makemewonder.com" target="_blank">
+        <%= image_tag "kajabi-logo.svg", alt: "Kajabi", width: "100%", style: "max-width:225px"%>
+      </a>
+    </figure>
+    <div class="do-box__about">
+      <p>Music continues to be a passion of mine, and when I can find the time,
+        try to put a sequence of chords and notes together to make a song or
+        two. Last year I did it enough to put an EP together under the name
+      makemewonder.</p>
     </div>
   </div>
 </div>
@@ -64,5 +107,25 @@
         </div>
       <% end %>
     </div>
+  </div>
+</div>
+
+<div class="home__intro">
+  <div class="container narrow home__intro-content">
+    <h2 class="h1">Other Notables</h2>
+
+    <ul>
+      <li>I'm a father and husband.</li>
+      <li>I think <%= link_to "travelling", "https://wagabonds.family/" %> is <%= link_to "pretty spectacular", "https://www.instagram.com/thewagabonds/" %>.</li>
+      <li>I'm a Big Brother feedster.</li>
+      <li>I love to cook.</li>
+      <li>I love to <%= link_to "read", "https://www.goodreads.com/nobodyiscertain" %>.</li>
+      <li>I run for cheeseburgers and beers.</li>
+      <li>I'm a <%= link_to "music lover", "https://www.last.fm/user/nobodyiscertain" %> & <%= link_to "vinyl collector", "https://www.discogs.com/user/nobodyiscertain" %>.</li>
+      <li>Stand-up comedy is my jam.</li>
+      <li>The Ice King is the most complex character on television.</li>
+      <li>Meditation keeps me grounded.</li>
+      <li>Bo Burnham: Inside</li>
+    </ul>
   </div>
 </div>
