@@ -32,7 +32,6 @@
 
 .home__intro
   padding: $base-spacing 0 $big-spacing
-  background: $white
   h2, h3
     text-align: center
   .hire-action
@@ -51,6 +50,30 @@
     p
       font-size: 1.275em
       line-height: 1.6875
+
+.side-feature
+  padding: $huge-spacing 0
+  text-align: center
+  +media($medium-screen-up)
+    text-align: left
+  .container
+    display: flex
+    flex-direction: column
+    align-items: center
+    +media($medium-screen-up)
+      flex-direction: row
+      align-items: normal
+    figure
+      max-width: 400px
+    > div, figure
+      flex: 1
+
+  +media($medium-screen-up)
+    padding: $big-spacing 0 $huge-spacing
+    p
+      font-size: 1.275em
+      line-height: 1.6875
+
 
 .home__dos
   padding: $huge-spacing 0
