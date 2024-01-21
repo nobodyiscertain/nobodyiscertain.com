@@ -9,7 +9,7 @@ __  __               __            __            _              __            __
                                                                                   /____/
   ]]>
 -->
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv='X-UA-Compatible' content='IE=edge;chrome=1' />
@@ -19,15 +19,13 @@ __  __               __            __            _              __            __
     <%= favicon_tag "/images/favicon.ico" %>
     <%= stylesheet_link_tag :styles %>
     <%= feed_tag :atom, "#{blog.options.prefix.to_s}/feed.xml", title: "Atom Feed" %>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   </head>
   <body class="<%= page_classes %> <%= current_page.data.layout %>">
     <div class="page-wrap">
       <header class="site-header">
         <div class="logo-wrap">
           <a href="/" class="logo-wrap__logo">
-            <%= image_tag "jw-logo-tan.svg", class: "logo", alt: "Jamie Wagner Logo" %>
-            <h1>Jamie Wagner</h1>
+            <h1>nbdyscrtn</h1>
           </a>
         </div>
         <nav>

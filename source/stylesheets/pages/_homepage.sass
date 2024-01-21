@@ -6,7 +6,7 @@
   align-items: flex-end
   min-height: 300px
   text-align: center
-  background: $blue url('../images/hero.png') no-repeat
+  background: $blue url('../images/hero.webp') no-repeat
   background-size: auto 100%
   background-position: center top
   +media($medium-screen-up)
@@ -32,7 +32,6 @@
 
 .home__intro
   padding: $base-spacing 0 $big-spacing
-  background: $white
   h2, h3
     text-align: center
   .hire-action
@@ -51,6 +50,32 @@
     p
       font-size: 1.275em
       line-height: 1.6875
+
+.side-feature
+  padding: $huge-spacing 0
+  text-align: center
+  p
+    margin: 0
+  +media($medium-screen-up)
+    text-align: left
+  .container
+    display: flex
+    flex-direction: column
+    align-items: center
+    +media($medium-screen-up)
+      flex-direction: row
+      align-items: center
+    figure
+      max-width: 400px
+    > div, figure
+      flex: 1
+
+  +media($medium-screen-up)
+    padding: $big-spacing 0 $huge-spacing
+    p
+      font-size: 1.275em
+      line-height: 1.6875
+
 
 .home__dos
   padding: $huge-spacing 0
@@ -97,24 +122,21 @@
     text-align: center
     color: $white
 
-.blog-posts__list
-  +clearfix
-  a
-    display: block
-    margin-bottom: $baseline / 2
-    font-weight: 600
-    line-height: 1.3
-  li
-    margin: ($baseline / 2) auto
+  .grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+    gap: $baseline / 2
+
+  .card
+    background: white
     padding: $baseline
     background: $white
+
+    a
+      display: block
+      margin-bottom: $baseline / 2
+      font-weight: 600
+      line-height: 1.3
     p
       font-size: .875em
       line-height: 1.4
-  +media($medium-screen-down)
-    li
-      height: auto !important
-  +media($medium-screen-up)
-    li
-      +span-columns(3)
-      +omega(4n)

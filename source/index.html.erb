@@ -1,73 +1,148 @@
 <div class="hero">
   <div class="hero__image-holder"></div>
   <div class="hero__content">
-    <h1>Howdy</h1>
-    <p>Most folks call me Jamie<br>and I love building things on the web.</p>
+    <h1>Howdy!</h1>
+    <p>Most folks call me Jamie.<br>I love building internet things and happy teams.</p>
   </div>
 </div>
 
 <div class="home__intro">
   <div class="container narrow home__intro-content">
     <h2 class="h1">About Me</h2>
-    <p>I've been web'n it up since 2007. When I'm not cutting code:</p>
+    <p>I've been building on the web since I was a teenager. Back when your
+      choice for the internet was AOL or Prodigy, and to connect to it, a call
+      was made by a modem. ☎️</p>
 
-    <ul>
-      <li>I'm a proud father and husband.</li>
-      <li>I think <%= link_to "travelling", "https://wagabonds.family/" %> is <%= link_to "pretty important", "https://www.instagram.com/thewagabonds/" %>.</li>
-      <li>I'm a rabid Big Brother fan.</li>
-      <li>I love to cook.</li>
-      <li>I try to be an <%= link_to "avid reader", "https://www.goodreads.com/nobodyiscertain" %>.</li>
-      <li>I'm a runner.</li>
-      <li>I'm a <%= link_to "music lover", "https://www.last.fm/user/nobodyiscertain" %> & <%= link_to "vinyl collector", "https://www.discogs.com/user/nobodyiscertain" %>.</li>
-      <li>Stand-up comedy is my favorite.</li>
-      <li>The Ice King is the most complex TV character.</li>
-      <li>I pretend to be a music maker.</li>
-      <li>Meditation keeps me sane.</li>
-      <li>Bo Burnham: Inside</li>
-    </ul>
+    <p>I took a little sabbatical from computers to pursue music for a while,
+      but when that stalled out, I convinced someone to give me money to build
+      them a website in 2007. Thus began a <b>wild</b> and <i>wonderful</i> ride.</p>
+
+    <p>This is my personal site, and here are a <b>few things that keep me busy:</b></p>
   </div>
 </div>
 
-<div class="home__dos">
+<div class="side-feature bg__black-blue">
   <div class="container">
-    <h2 class="h1">Proud Work</h2>
-    <div class="flex-wrap">
-      <div class="home__do-box">
-        <figure>
-          <a href="https://kajabi.com/" target="_blank">
-            <%= image_tag "kajabi-logo.svg", alt: "Kajabi", width: "100%", style: "max-width:225px"%>
-          </a>
-        </figure>
-        <div class="do-box__about"><p>I'm currently the Engineering Manager<br>for the Build team at Kajabi. <%= link_to "We're Hiring!", "https://kajabi.com/careers#open-positions", target: "_blank" %></p></div>
-      </div>
-
-      <div class="home__do-box">
-        <figure>
-          <a href="https://www.dailyminded.com" target="_blank">
-            <%= image_tag "dailyminded.svg", alt: "Daily Minded", width: "100%", style: "max-width:225px"%>
-          </a>
-        </figure>
-        <div class="do-box__about"><p>I am the technical <b>co-founder</b> of <a href="https://www.dailyminded.com" target="_blank">Daily Minded</a>:<br>An online journal you might actually keep up with.</p></div>
-      </div>
+    <figure style="text-align: center">
+      <a href="https://kajabi.com/" target="_blank">
+        <%= image_tag "kajabi-logo.svg", alt: "Kajabi Logo", width: "100%", style: "max-width: 350px"%>
+      </a>
+    </figure>
+    <div class="do-box__about">
+      <p>I'm currently a Director of Engineering at Kajabi and in charge of the
+        Creator Tools teams. We are responsible for the digital products,
+        emails, and web pages our customers create to build their businesses.
+      </p>
     </div>
   </div>
 </div>
 
+<div class="side-feature bg__orange">
+  <div class="container">
+    <div class="">
+      <p>I am the technical co-founder of Daily Minded, a journaling app you'll
+        actually keep up with!
+        <br>
+        <br>
+        Reply to a daily email, and <b>BOOM</b>, Journaling complete!
+      </p>
+        <br>
+      <a
+        href="https://www.dailyminded.com"
+        target="_blank"
+        class="btn"
+        >
+        Start Writing Now
+      </a>
+    </div>
+    <figure>
+      <a href="https://www.dailyminded.com" target="_blank">
+        <%= image_tag "dailyminded.svg", alt: "DailyMinded Logo", width: "100%", style: ""%>
+      </a>
+    </figure>
+  </div>
+</div>
+
+<div class="side-feature">
+  <div class="container">
+    <figure>
+      <a href="https://www.thereluctantem.com" target="_blank">
+        <%= image_tag "thereluctantem.png", alt: "The Reluctant EM", width: "100%", style: ""%>
+      </a>
+    </figure>
+    <div class="">
+      <p>My jump into management was challenging. The engineer in me wasn't
+        happy, nor did I understand the position entirely. I managed to fumble
+        through it and have found fulfillment on the other side.
+        <br>
+        <br>
+        I write about my journey and learnings at The Reluctant EM.
+      </p>
+        <br>
+      <a
+        href="https://www.thereluctantem.com"
+        target="_blank"
+        class="btn"
+        >
+        Come have a Look
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="side-feature bg__black-blue">
+  <div class="container">
+    <div class="">
+      <p>Music continues to be a passion of mine. When I find the time, I
+        combine a sequence of sounds to make a song (or two). I did it enough
+        to put an EP together under the name makemewonder.
+      </p>
+      <br>
+      <a
+        href="https://www.makemewonder.com"
+        target="_blank"
+        class="btn"
+        >
+        Have a Listen
+      </a>
+    </div>
+    <figure>
+      <a href="https://makemewonder.com" target="_blank">
+        <%= image_tag "halfway-there.jpg", alt: "Halfway There EP", width: "100%", style: ""%>
+      </a>
+    </figure>
+  </div>
+</div>
+
 <div class="home__posts">
-  <div class="container align-left">
+  <div class="container">
     <h2 class="h1">From the Blog</h2>
-    <ul class="blog-posts__list set-height-wrap">
+    <div class="grid">
       <% blog.articles.each do |article| %>
-        <li class="set-height">
+        <div class="card">
           <%= link_to article.title, article.url %>
           <p><%= article.data.description %></p>
-        </li>
+        </div>
       <% end %>
-      <li class="set-height"><%= link_to "Introducing Stag", "http://thisbythem.com/blog/introducing-stag-a-command-line-interface-for-statamic/" %>
-      <p>A command line interface for Statamic</p>
-      </li>
-      <li class="set-height"><%= link_to "Statamic: Relative HTML Cache Buster", "http://thisbythem.com/blog/statamic-realtive-cache-buster/" %></li>
-      <li class="set-height"><%= link_to "Pay. Your. Estimates.", "http://thisbythem.com/blog/pay-your-estimates/" %></li>
+    </div>
+  </div>
+</div>
+
+<div class="home__intro">
+  <div class="container narrow home__intro-content">
+    <h2 class="h1">Other Notables</h2>
+    <ul>
+      <li>I'm a father and husband.</li>
+      <li>I think <%= link_to "travelling", "https://wagabonds.family/" %> is <%= link_to "pretty spectacular", "https://www.instagram.com/thewagabonds/" %>.</li>
+      <li>I'm a Big Brother feedster.</li>
+      <li>I love to cook.</li>
+      <li>I love to <%= link_to "read", "https://www.goodreads.com/nobodyiscertain" %>.</li>
+      <li>I run for cheeseburgers and beers.</li>
+      <li>I'm a <%= link_to "music lover", "https://www.last.fm/user/nobodyiscertain" %> & <%= link_to "vinyl collector", "https://www.discogs.com/user/nobodyiscertain" %>.</li>
+      <li>Stand-up comedy is my jam.</li>
+      <li>The Ice King is the most complex character on television.</li>
+      <li>Meditation keeps me grounded.</li>
+      <li>Bo Burnham: Inside</li>
     </ul>
   </div>
 </div>
