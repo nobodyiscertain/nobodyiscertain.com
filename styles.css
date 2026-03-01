@@ -1,0 +1,270 @@
+:root {
+  --bg: #0f1117;
+  --bg-card: #181a24;
+  --text: #e4e4e7;
+  --text-muted: #9ca3af;
+  --accent: #7c93e0;
+  --accent-hover: #95abf0;
+  --border: #2a2d3a;
+  --radius: 12px;
+  --max-width: 720px;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 80px 24px 60px;
+  position: relative;
+  overflow: hidden;
+  background-image: url('logo-light.png');
+  background-size: 35px;
+  background-repeat: repeat;
+  background-position: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0.985;
+  z-index: 0;
+}
+
+.hero__photo,
+.hero h1,
+.hero__tagline,
+.hero__links {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__photo {
+  margin-bottom: 28px;
+}
+
+.hero__photo img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--border);
+  transition: border-color 0.3s ease;
+}
+
+.hero__photo img:hover {
+  border-color: var(--accent);
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+}
+
+.hero__tagline {
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.hero__links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.hero__links a {
+  color: var(--text-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.hero__links a:hover {
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Sections */
+section {
+  padding: 60px 0;
+}
+
+section + section {
+  border-top: 1px solid var(--border);
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+/* About */
+.about p {
+  margin-bottom: 16px;
+  color: var(--text-muted);
+}
+
+.about p:last-child {
+  margin-bottom: 0;
+}
+
+/* Projects */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.project-card {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  color: var(--text);
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  color: var(--text);
+}
+
+.project-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.project-card p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* Fun Stuff */
+.fun-stuff ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fun-stuff li {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  transition: border-color 0.2s ease;
+}
+
+.fun-stuff li:hover {
+  border-color: var(--accent);
+}
+
+.fun-stuff li a {
+  color: var(--text-muted);
+}
+
+.fun-stuff li:hover a,
+.fun-stuff li a:hover {
+  color: var(--accent);
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 0;
+  text-align: center;
+}
+
+footer p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+footer a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+}
+
+footer a:hover {
+  color: var(--accent);
+}
+
+footer .copyright {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero {
+    padding: 60px 24px 40px;
+    background-size: 28px;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero__photo img {
+    width: 130px;
+    height: 130px;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  section {
+    padding: 40px 0;
+  }
+}
