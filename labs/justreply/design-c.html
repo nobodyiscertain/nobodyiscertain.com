@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just Reply — You Don't Need Another App</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✉️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #111;
+      color: #e0e0e0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* Hero / Anti-App Section */
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 100px 40px 80px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 32px;
+    }
+
+    .hero h1 .strike {
+      text-decoration: line-through;
+      color: #444;
+    }
+
+    .hero h1 .highlight {
+      color: #22c55e;
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: #888;
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #555; }
+    .signup-form input:focus { border-color: #22c55e; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #22c55e;
+      color: #111;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: #16a34a; }
+
+    /* Graveyard */
+    .graveyard {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .graveyard h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+      letter-spacing: -0.02em;
+    }
+
+    .dead-apps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .dead-app {
+      background: #1a1a1a;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .dead-app .name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      color: #555;
+      text-decoration: line-through;
+    }
+
+    .dead-app .cause {
+      font-size: 0.78rem;
+      color: #444;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .dead-app .rip {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 0.7rem;
+      color: #333;
+    }
+
+    .graveyard-point {
+      font-size: 1.1rem;
+      color: #888;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .graveyard-point strong {
+      color: #22c55e;
+    }
+
+    /* Comparison */
+    .comparison {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .comparison h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+      letter-spacing: -0.02em;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .compare-table th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #555;
+      border-bottom: 1px solid #222;
+    }
+
+    .compare-table td {
+      padding: 16px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #1a1a1a;
+      color: #888;
+    }
+
+    .compare-table td:first-child {
+      color: #ccc;
+      font-weight: 500;
+    }
+
+    .compare-table .them { color: #555; }
+    .compare-table .us { color: #22c55e; font-weight: 500; }
+
+    /* The Pitch */
+    .pitch {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .pitch h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+
+    .pitch-points {
+      display: grid;
+      gap: 24px;
+    }
+
+    .pitch-point {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .pitch-check {
+      font-size: 1.2rem;
+      color: #22c55e;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pitch-point p {
+      font-size: 1rem;
+      color: #aaa;
+      line-height: 1.5;
+    }
+
+    .pitch-point p strong {
+      color: #ddd;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+      text-align: center;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .bottom-cta h2 .highlight { color: #22c55e; }
+
+    .bottom-cta p {
+      color: #555;
+      margin-bottom: 32px;
+    }
+
+    .bottom-cta .signup-form {
+      margin: 0 auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer p { font-size: 0.75rem; color: #333; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 60px 24px; }
+      .signup-form { flex-direction: column; }
+      .dead-apps { grid-template-columns: 1fr; }
+      .compare-table { font-size: 0.82rem; }
+      .graveyard, .comparison, .pitch, .bottom-cta { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">justreply.email</a>
+  </nav>
+
+  <section class="hero">
+    <h1>
+      You don't need<br>
+      <span class="strike">another app.</span><br>
+      <span class="highlight">Just reply.</span>
+    </h1>
+    <p class="hero-sub">Journaling that lives in your inbox. We send an email. You reply. That's your journal entry. No app, no login, no habit to build.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+  </section>
+
+  <section class="graveyard">
+    <h2>The journaling app graveyard</h2>
+    <div class="dead-apps">
+      <div class="dead-app">
+        <div class="name">Day One</div>
+        <div class="cause">died: day 4</div>
+        <div class="rip">☠️</div>
+      </div>
+      <div class="dead-app">
+        <div class="name">Notion Journal</div>
+        <div class="cause">died: day 6</div>
+        <div class="rip">☠️</div>
+      </div>
+      <div class="dead-app">
+        <div class="name">Morning Pages</div>
+        <div class="cause">died: day 2</div>
+        <div class="rip">☠️</div>
+      </div>
+      <div class="dead-app">
+        <div class="name">The Leather Notebook</div>
+        <div class="cause">died: page 7</div>
+        <div class="rip">☠️</div>
+      </div>
+    </div>
+    <p class="graveyard-point">Every journaling tool asks you to <strong>add something new</strong> to your day. We remove something instead. Open email. Hit reply. Done.</p>
+  </section>
+
+  <section class="comparison">
+    <h2>Journaling apps vs. your inbox</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Apps</th>
+          <th>Just Reply</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>New account</td>
+          <td class="them">Required</td>
+          <td class="us">No</td>
+        </tr>
+        <tr>
+          <td>New habit</td>
+          <td class="them">Required</td>
+          <td class="us">No</td>
+        </tr>
+        <tr>
+          <td>Time to first entry</td>
+          <td class="them">5-10 min setup</td>
+          <td class="us">30 seconds</td>
+        </tr>
+        <tr>
+          <td>Works on</td>
+          <td class="them">Their app</td>
+          <td class="us">Literally any email client</td>
+        </tr>
+        <tr>
+          <td>Day 30 retention</td>
+          <td class="them">~8%</td>
+          <td class="us">You tell us</td>
+        </tr>
+        <tr>
+          <td>Friction</td>
+          <td class="them">Open app → new entry → write → save</td>
+          <td class="us">Reply → send</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="pitch">
+    <h2>Here's the deal</h2>
+    <div class="pitch-points">
+      <div class="pitch-point">
+        <span class="pitch-check">✓</span>
+        <p><strong>Every morning (or evening, your call)</strong> we send you a short email with an optional prompt. Something that makes you think for 30 seconds.</p>
+      </div>
+      <div class="pitch-point">
+        <span class="pitch-check">✓</span>
+        <p><strong>You reply.</strong> One sentence or five paragraphs. Whatever you've got. Bad days count too.</p>
+      </div>
+      <div class="pitch-point">
+        <span class="pitch-check">✓</span>
+        <p><strong>We save it.</strong> Encrypted, private, searchable. Look back in six months and remember why you made that call.</p>
+      </div>
+      <div class="pitch-point">
+        <span class="pitch-check">✓</span>
+        <p><strong>That's it.</strong> No onboarding flow. No premium tier upsell on day 2. No "streak" guilt trips. Just a journal that works because it doesn't ask you to change anything.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom-cta">
+    <h2>Stop downloading.<br><span class="highlight">Start replying.</span></h2>
+    <p>Launching soon. No spam, just one email when it's ready.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Just Reply — The anti-journaling-app.</p>
+  </footer>
+
+</body>
+</html>

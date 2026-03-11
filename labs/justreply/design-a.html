@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just Reply — Journal by Email</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✉️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: #666; }
+
+    /* Hero */
+    .hero {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 120px 40px 100px;
+      text-align: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #555;
+      border: 1px solid #222;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin-bottom: 28px;
+      color: #fff;
+    }
+
+    .hero h1 strong {
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.6;
+      max-width: 480px;
+      margin: 0 auto 48px;
+    }
+
+    /* Signup Form */
+    .signup-form {
+      display: flex;
+      gap: 12px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 6px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #444; }
+    .signup-form input:focus { border-color: #444; }
+
+    .signup-form button {
+      padding: 14px 28px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: #fff;
+      color: #0a0a0a;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .signup-form button:hover { opacity: 0.85; }
+
+    .signup-note {
+      margin-top: 16px;
+      font-size: 0.75rem;
+      color: #333;
+    }
+
+    /* How It Works */
+    .how {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .how-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .how-step {
+      text-align: center;
+      padding: 32px;
+    }
+
+    .how-step .icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+
+    .how-step h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+
+    .how-step p {
+      font-size: 0.82rem;
+      color: #555;
+    }
+
+    .how-arrow {
+      font-size: 1.2rem;
+      color: #222;
+    }
+
+    /* Value Props */
+    .value {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .value-item {
+      padding: 28px 0;
+      border-bottom: 1px solid #111;
+      display: flex;
+      gap: 24px;
+    }
+
+    .value-item:last-child { border-bottom: none; }
+
+    .value-num {
+      font-size: 0.72rem;
+      color: #333;
+      font-weight: 600;
+      padding-top: 3px;
+      min-width: 24px;
+    }
+
+    .value-item h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #ddd;
+    }
+
+    .value-item p {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .bottom-cta p {
+      color: #555;
+      margin-bottom: 32px;
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #111;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: #222;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 20px 24px; }
+      .hero { padding: 80px 24px 60px; }
+      .signup-form { flex-direction: column; }
+      .how-arrow { display: none; }
+      .how-flow { gap: 0; }
+      .value { padding: 60px 24px; }
+      .value-item { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">justreply<span>.email</span></a>
+  </nav>
+
+  <section class="hero">
+    <span class="hero-tag">Journaling for professionals</span>
+    <h1>We send you an email. <strong>You reply.</strong></h1>
+    <p>No app. No login. No new habit to build. Private journaling that meets you where you already are — your inbox.</p>
+
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+    <p class="signup-note">No spam. Just one email when we launch.</p>
+  </section>
+
+  <section class="how">
+    <div class="how-flow">
+      <div class="how-step">
+        <div class="icon">📨</div>
+        <h3>We send a prompt</h3>
+        <p>Daily, at your preferred time</p>
+      </div>
+      <div class="how-arrow">→</div>
+      <div class="how-step">
+        <div class="icon">↩️</div>
+        <h3>You reply</h3>
+        <p>Two words or two paragraphs</p>
+      </div>
+      <div class="how-arrow">→</div>
+      <div class="how-step">
+        <div class="icon">📓</div>
+        <h3>That's your journal</h3>
+        <p>Private, searchable, yours</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="value">
+    <div class="value-item">
+      <span class="value-num">01</span>
+      <div>
+        <h3>Built for busy leaders</h3>
+        <p>You make dozens of decisions a day. Capture the reasoning while it's fresh — not three weeks later when someone asks "why did we do that?"</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <span class="value-num">02</span>
+      <div>
+        <h3>Zero friction</h3>
+        <p>You're already in your inbox. No new app, no new password, no new tab to forget about. Hit reply, type, send.</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <span class="value-num">03</span>
+      <div>
+        <h3>Private by default</h3>
+        <p>Your entries are encrypted and yours alone. Not training data. Not shared. Not analyzed by anyone but you.</p>
+      </div>
+    </div>
+    <div class="value-item">
+      <span class="value-num">04</span>
+      <div>
+        <h3>Prompts that make you think</h3>
+        <p>Optional daily prompts designed for professionals: decisions, wins, blockers, reflections. Skip them anytime.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom-cta">
+    <h2>Your future self will thank you.</h2>
+    <p>Launching soon.</p>
+    <form class="signup-form" action="#" method="post" style="margin: 0 auto;">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Just Reply</p>
+  </footer>
+
+</body>
+</html>

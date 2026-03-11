@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crate Digger — Picks Left on the Counter</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f5f0e8;
+      color: #2c2418;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Paper texture */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content { position: relative; z-index: 1; }
+
+    h1, h2, h3, blockquote { font-family: 'Libre Baskerville', serif; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #2c2418;
+      text-decoration: none;
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 40px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      color: #1a1008;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: #8b4513;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: #7a6b5a;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #ebe5d9;
+      border: 1px solid #d5ccbe;
+      border-radius: 4px;
+      color: #2c2418;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #a99e8f; }
+    .signup-form input:focus { border-color: #8b4513; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: #8b4513;
+      color: #f5f0e8;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: #723a0f; }
+
+    /* Record Stack Visual */
+    .record-stack {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      height: 360px;
+    }
+
+    .record {
+      width: 220px;
+      height: 220px;
+      border-radius: 6px;
+      position: absolute;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .record:hover { transform: translateY(-8px) !important; }
+
+    .record:nth-child(1) {
+      background: linear-gradient(135deg, #2c1810, #8b4513);
+      transform: rotate(-8deg);
+      top: 30px;
+      left: 10px;
+      z-index: 1;
+    }
+
+    .record:nth-child(2) {
+      background: linear-gradient(135deg, #1a1a2e, #4a3f6b);
+      transform: rotate(3deg);
+      top: 50px;
+      left: 60px;
+      z-index: 2;
+    }
+
+    .record:nth-child(3) {
+      background: linear-gradient(135deg, #1b3a2d, #2d8659);
+      transform: rotate(-2deg);
+      top: 70px;
+      left: 120px;
+      z-index: 3;
+    }
+
+    .record .inner-label {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+    }
+
+    .record .inner-label .tag {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .record .inner-label .title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Counter note */
+    .counter-note {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .counter-note blockquote {
+      font-size: 1.4rem;
+      font-style: italic;
+      color: #5a4a38;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .counter-note blockquote::before {
+      content: '"';
+      font-size: 4rem;
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      color: #d5ccbe;
+      font-family: 'Libre Baskerville', serif;
+    }
+
+    /* How section */
+    .how-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      border-top: 2px dashed #d5ccbe;
+    }
+
+    .how-section h2 {
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 40px;
+      text-align: center;
+      color: #1a1008;
+    }
+
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .how-step {
+      background: #ebe5d9;
+      border-radius: 6px;
+      padding: 28px;
+      text-align: center;
+      border: 1px solid #d5ccbe;
+    }
+
+    .how-step .icon { font-size: 2rem; margin-bottom: 12px; }
+
+    .how-step h3 {
+      font-size: 0.95rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: #2c2418;
+    }
+
+    .how-step p {
+      font-size: 0.82rem;
+      color: #7a6b5a;
+      line-height: 1.5;
+    }
+
+    /* Picks section */
+    .picks-preview {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      border-top: 2px dashed #d5ccbe;
+    }
+
+    .picks-preview h2 {
+      font-size: 1.6rem;
+      font-weight: 400;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .pick-types {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .pick-type {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .pick-type .icon { font-size: 2.5rem; margin-bottom: 16px; }
+
+    .pick-type h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #2c2418;
+      margin-bottom: 8px;
+    }
+
+    .pick-type p {
+      font-size: 0.82rem;
+      color: #7a6b5a;
+      line-height: 1.5;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      background: #2c2418;
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .bottom-cta h2 {
+      color: #f5f0e8;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .bottom-cta p {
+      color: #7a6b5a;
+      margin-bottom: 32px;
+    }
+
+    .bottom-cta .signup-form input {
+      background: #3d3226;
+      border-color: #4d4236;
+      color: #f5f0e8;
+    }
+
+    .bottom-cta .signup-form input::placeholder { color: #7a6b5a; }
+    .bottom-cta .signup-form input:focus { border-color: #c4813a; }
+
+    .bottom-cta .signup-form button {
+      background: #c4813a;
+    }
+
+    .bottom-cta .signup-form button:hover { background: #a86c2e; }
+
+    .bottom-cta .signup-form {
+      margin: 0 auto;
+      max-width: 400px;
+    }
+
+    footer {
+      background: #2c2418;
+      text-align: center;
+      padding: 24px 40px;
+      border-top: 1px solid #3d3226;
+    }
+
+    footer p { font-size: 0.75rem; color: #4d4236; }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 40px 24px 60px;
+      }
+      .record-stack { height: 280px; }
+      .record { width: 170px; height: 170px; }
+      .signup-form { flex-direction: column; }
+      .how-steps, .pick-types { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+
+    <nav>
+      <a href="#" class="nav-logo">Crate Digger</a>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <h1>We left some <em>picks</em> on the counter for you.</h1>
+        <p class="hero-desc">AI that knows your record collection, your listening habits, and your taste. Three personalized vinyl picks in your inbox, once a month. Not a subscription box. Just really good recommendations.</p>
+        <form class="signup-form" action="#" method="post">
+          <input type="email" placeholder="you@email.com" required>
+          <button type="submit">Start Digging</button>
+        </form>
+      </div>
+      <div class="record-stack">
+        <div class="record">
+          <div class="inner-label">
+            <div class="tag">Recent Listen</div>
+            <div class="title">Khruangbin</div>
+          </div>
+        </div>
+        <div class="record">
+          <div class="inner-label">
+            <div class="tag">Collection Gap</div>
+            <div class="title">Portishead</div>
+          </div>
+        </div>
+        <div class="record">
+          <div class="inner-label">
+            <div class="tag">Wild Card</div>
+            <div class="title">Khana Bierbood</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="counter-note">
+      <blockquote>Like having a friend at every record store in the world — one who actually knows what you like.</blockquote>
+    </section>
+
+    <section class="how-section">
+      <h2>Here's how it works</h2>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="icon">📦</div>
+          <h3>Connect your crates</h3>
+          <p>Link Discogs (your collection) and Spotify (your recent listens). Takes 30 seconds.</p>
+        </div>
+        <div class="how-step">
+          <div class="icon">🤖</div>
+          <h3>We do the digging</h3>
+          <p>AI analyzes your taste — not just genres, but the connections between what you own and what you play.</p>
+        </div>
+        <div class="how-step">
+          <div class="icon">📬</div>
+          <h3>3 picks, every month</h3>
+          <p>A beautiful email with album art, the reasoning behind each pick, and links to buy on Discogs.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="picks-preview">
+      <h2>Every month, 3 kinds of picks</h2>
+      <div class="pick-types">
+        <div class="pick-type">
+          <div class="icon">🎧</div>
+          <h3>The Recent Listen</h3>
+          <p>Based on what you've been streaming. A vinyl version of something you already love.</p>
+        </div>
+        <div class="pick-type">
+          <div class="icon">🕳️</div>
+          <h3>The Collection Gap</h3>
+          <p>The record that's conspicuously missing. The one any fan of your taste should own.</p>
+        </div>
+        <div class="pick-type">
+          <div class="icon">🎲</div>
+          <h3>The Wild Card</h3>
+          <p>Something unexpected. A deep cut, an adjacent genre. The record you'd never find on your own.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-cta">
+      <h2>Ready to start digging?</h2>
+      <p>Free. No spam. Just great records.</p>
+      <form class="signup-form" action="#" method="post">
+        <input type="email" placeholder="you@email.com" required>
+        <button type="submit">Start Digging</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Crate Digger — Curated by AI, made for collectors.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

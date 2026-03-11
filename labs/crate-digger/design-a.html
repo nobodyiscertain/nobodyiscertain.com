@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crate Digger — AI-Powered Record Picks</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #faf9f7;
+      color: #2a2a2a;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, blockquote { font-family: 'Newsreader', Georgia, serif; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: 'Newsreader', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      text-decoration: none;
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px 60px;
+      text-align: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #999;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: #777;
+      max-width: 500px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #fff;
+      border: 1px solid #e0dcd5;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #bbb; }
+    .signup-form input:focus { border-color: #1a1a1a; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: #333; }
+
+    .signup-note {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #ccc;
+    }
+
+    /* Email Preview */
+    .email-preview {
+      max-width: 640px;
+      margin: 60px auto 0;
+      padding: 0 40px;
+    }
+
+    .email-window {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e8e4dd;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    }
+
+    .email-bar {
+      padding: 14px 20px;
+      border-bottom: 1px solid #f0ece5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .email-bar .from {
+      font-size: 0.78rem;
+      color: #999;
+    }
+
+    .email-bar .date {
+      font-size: 0.72rem;
+      color: #bbb;
+    }
+
+    .email-subject-line {
+      padding: 20px 24px 0;
+      font-family: 'Newsreader', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .email-intro {
+      padding: 12px 24px 20px;
+      font-size: 0.88rem;
+      color: #888;
+      border-bottom: 1px solid #f0ece5;
+    }
+
+    .pick-cards {
+      padding: 20px 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .pick-card {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid #f5f2ed;
+    }
+
+    .pick-card:last-child { border-bottom: none; }
+
+    .pick-art {
+      width: 72px;
+      height: 72px;
+      border-radius: 6px;
+    }
+
+    .pick-card:nth-child(1) .pick-art { background: linear-gradient(135deg, #1a1a2e, #e94560); }
+    .pick-card:nth-child(2) .pick-art { background: linear-gradient(135deg, #0f3443, #34e89e); }
+    .pick-card:nth-child(3) .pick-art { background: linear-gradient(135deg, #654ea3, #eaafc8); }
+
+    .pick-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #bbb;
+      margin-bottom: 4px;
+    }
+
+    .pick-title {
+      font-family: 'Newsreader', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .pick-reason {
+      font-size: 0.8rem;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    /* How It Works */
+    .how-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #eeebe5;
+    }
+
+    .how-section h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+
+    .how-item .num {
+      font-family: 'Newsreader', serif;
+      font-size: 2.5rem;
+      color: #ddd;
+      margin-bottom: 12px;
+      font-weight: 300;
+    }
+
+    .how-item h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .how-item p {
+      font-size: 0.85rem;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    /* What it's not */
+    .not-section {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #eeebe5;
+      text-align: center;
+    }
+
+    .not-section h2 {
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 32px;
+    }
+
+    .not-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .not-item {
+      font-size: 0.85rem;
+      color: #bbb;
+      padding: 8px 20px;
+      border: 1px solid #e8e4dd;
+      border-radius: 100px;
+      text-decoration: line-through;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 80px 40px;
+      border-top: 1px solid #eeebe5;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .bottom-cta p {
+      color: #999;
+      margin-bottom: 32px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #eeebe5;
+    }
+
+    footer p { font-size: 0.78rem; color: #ddd; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 60px 24px 40px; }
+      .signup-form { flex-direction: column; }
+      .email-preview { padding: 0 24px; }
+      .pick-card { grid-template-columns: 56px 1fr; }
+      .pick-art { width: 56px; height: 56px; }
+      .how-grid { grid-template-columns: 1fr; gap: 32px; }
+      .how-section, .not-section, .bottom-cta { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Crate Digger</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-tag">Your monthly dig, delivered</div>
+    <h1>3 records. Once a month.<br>Picked just for you.</h1>
+    <p class="hero-desc">Connect your Discogs collection and Spotify. Our AI finds the records you're missing, the deep cuts you'll love, and the albums you'd never find on your own.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Start Digging</button>
+    </form>
+    <p class="signup-note">Free. No spam. Just records.</p>
+  </section>
+
+  <div class="email-preview">
+    <div class="email-window">
+      <div class="email-bar">
+        <span class="from">from: hello@cratedigger.com</span>
+        <span class="date">March 2026</span>
+      </div>
+      <div class="email-subject-line">Your monthly dig is here 🎵</div>
+      <p class="email-intro">Hey Jamie — here are 3 records we think belong in your collection.</p>
+      <div class="pick-cards">
+        <div class="pick-card">
+          <div class="pick-art"></div>
+          <div>
+            <div class="pick-label">Recent Listen</div>
+            <div class="pick-title">Khruangbin — Con Todo El Mundo (2018)</div>
+            <p class="pick-reason">You've been streaming them nonstop but don't own any on vinyl. This pressing sounds incredible.</p>
+          </div>
+        </div>
+        <div class="pick-card">
+          <div class="pick-art"></div>
+          <div>
+            <div class="pick-label">Collection Gap</div>
+            <div class="pick-title">Portishead — Dummy (1994)</div>
+            <p class="pick-reason">You own 12 trip-hop records but not the one that started it all. That's a gap we need to fill.</p>
+          </div>
+        </div>
+        <div class="pick-card">
+          <div class="pick-art"></div>
+          <div>
+            <div class="pick-label">Wild Card</div>
+            <div class="pick-title">Khana Bierbood — Strangers from the Far East (2020)</div>
+            <p class="pick-reason">Thai surf rock with psychedelic funk edges. Based on your Khruangbin and Os Mutantes, this will click immediately.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="how-section">
+    <h2>How it works</h2>
+    <div class="how-grid">
+      <div class="how-item">
+        <div class="num">1</div>
+        <h3>Connect your crates</h3>
+        <p>Link your Discogs collection and Spotify. We learn what you own and what you're listening to.</p>
+      </div>
+      <div class="how-item">
+        <div class="num">2</div>
+        <h3>We dig for you</h3>
+        <p>AI analyzes your taste, finds gaps, and surfaces records you'd love but haven't found yet.</p>
+      </div>
+      <div class="how-item">
+        <div class="num">3</div>
+        <h3>Check your inbox</h3>
+        <p>Once a month: 3 picks, the reasoning behind each, and links to buy them on Discogs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="not-section">
+    <h2>What this isn't</h2>
+    <div class="not-items">
+      <span class="not-item">Subscription box</span>
+      <span class="not-item">We ship records</span>
+      <span class="not-item">A marketplace</span>
+      <span class="not-item">Spotify wrapped</span>
+      <span class="not-item">Generic "you might like"</span>
+    </div>
+  </section>
+
+  <section class="bottom-cta">
+    <h2>Like having a friend at every record store in the world.</h2>
+    <p>Free. Launching soon.</p>
+    <form class="signup-form" action="#" method="post" style="margin: 0 auto;">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Start Digging</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Crate Digger</p>
+  </footer>
+
+</body>
+</html>

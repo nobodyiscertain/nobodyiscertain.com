@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Still Building — Leadership for Builders</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔨</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #faf9f6;
+      color: #2a2a2a;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, blockquote { font-family: 'Source Serif 4', Georgia, serif; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: #888;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: #1a1a1a; }
+
+    /* Hero */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 40px 60px;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      color: #1a1a1a;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: #b45309;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: #777;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+      max-width: 420px;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #bbb; }
+    .signup-form input:focus { border-color: #b45309; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #b45309;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: #92400e; }
+
+    .signup-note {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #ccc;
+    }
+
+    /* Hero visual - author card */
+    .author-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+      border: 1px solid #eee;
+    }
+
+    .author-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a1a1a, #444);
+      margin-bottom: 20px;
+    }
+
+    .author-name {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .author-title {
+      font-size: 0.82rem;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .author-bio {
+      font-size: 0.88rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .author-stats {
+      display: flex;
+      gap: 24px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat .num {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .stat .label {
+      font-size: 0.7rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* What you'll get */
+    .what-you-get {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #eee;
+    }
+
+    .what-you-get h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 48px;
+      color: #1a1a1a;
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .benefit-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .benefit-card .icon {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+    }
+
+    .benefit-card h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .benefit-card p {
+      font-size: 0.85rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* Current topics */
+    .topics {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #eee;
+    }
+
+    .topics h2 {
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 40px;
+      color: #1a1a1a;
+    }
+
+    .topic-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .topic-card:hover { border-color: #b45309; }
+
+    .topic-card h3 {
+      font-size: 1.05rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .topic-card p {
+      font-size: 0.88rem;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    .topic-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #b45309;
+      background: #fef3e2;
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    /* Who it's for */
+    .audience {
+      background: #f5f2ed;
+      padding: 80px 40px;
+    }
+
+    .audience-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .audience h2 {
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 32px;
+      color: #1a1a1a;
+    }
+
+    .audience ul {
+      list-style: none;
+    }
+
+    .audience li {
+      padding: 14px 0;
+      border-bottom: 1px solid #e0dcd5;
+      font-size: 0.95rem;
+      color: #555;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .audience li::before {
+      content: '→';
+      color: #b45309;
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 80px 40px;
+      border-top: 1px solid #eee;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 12px;
+      color: #1a1a1a;
+    }
+
+    .bottom-cta .sub {
+      color: #888;
+      margin-bottom: 32px;
+      font-size: 0.95rem;
+    }
+
+    .bottom-cta .signup-form { margin: 0 auto; }
+
+    .coaching-cta {
+      margin-top: 24px;
+      font-size: 0.88rem;
+    }
+
+    .coaching-cta a {
+      color: #b45309;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .coaching-cta a:hover { color: #92400e; }
+
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #eee;
+    }
+
+    footer p { font-size: 0.78rem; color: #ccc; }
+    footer a { color: #aaa; text-decoration: none; }
+    footer a:hover { color: #666; }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 50px 24px;
+        gap: 40px;
+      }
+      .signup-form { flex-direction: column; max-width: none; }
+      .benefit-grid { grid-template-columns: 1fr; }
+      .author-stats { gap: 16px; }
+      .what-you-get, .topics, .bottom-cta { padding: 60px 24px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Still Building</a>
+    <div class="nav-links">
+      <a href="https://nobodyiscertain.com">About Jamie</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <h1>The playbook is being <em>rewritten</em>.</h1>
+      <p class="hero-desc">I'm a VP of Engineering managing 30 people, and the playbook I learned on doesn't work anymore. So I'm rewriting it in real time. Flattening teams, building with AI, and sharing all of it.</p>
+      <form class="signup-form" action="#" method="post">
+        <input type="email" placeholder="you@company.com" required>
+        <button type="submit">Get Early Access</button>
+      </form>
+      <p class="signup-note">No spam. Just honest notes on eng leadership.</p>
+    </div>
+
+    <div class="author-card">
+      <div class="author-avatar"></div>
+      <div class="author-name">Jamie Wagner</div>
+      <div class="author-title">VP of Engineering at Kajabi</div>
+      <p class="author-bio">Building software since 2007. Still shipping code between 1-on-1s. Figured out I could be a leader without stopping being a builder.</p>
+      <div class="author-stats">
+        <div class="stat">
+          <div class="num">30</div>
+          <div class="label">Direct reports</div>
+        </div>
+        <div class="stat">
+          <div class="num">18</div>
+          <div class="label">Years building</div>
+        </div>
+        <div class="stat">
+          <div class="num">0</div>
+          <div class="label">EMs remaining</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="what-you-get">
+    <h2>What you'll get</h2>
+    <div class="benefit-grid">
+      <div class="benefit-card">
+        <div class="icon">📝</div>
+        <h3>Weekly insights</h3>
+        <p>Real notes on leading engineering teams through the AI transition. Not theory. What's actually happening this week.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">🔍</div>
+        <h3>Honest takes</h3>
+        <p>On reorgs, flattening, and the messy human side of change. The stuff nobody puts in their LinkedIn posts.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">🛠️</div>
+        <h3>Practical playbooks</h3>
+        <p>What's working, what failed, and why. Frameworks that came from doing, not consulting.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">🎓</div>
+        <h3>Course access</h3>
+        <p>Early access to the Still Building course when it launches. You'll be first in line.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="topics">
+    <h2>What I'm working through right now</h2>
+
+    <div class="topic-card">
+      <span class="topic-tag">AI + Management</span>
+      <h3>How I manage 30 people with AI</h3>
+      <p>A "manager brain" that preps for 1-on-1s, captures conversations, tracks follow-ups. The management layer didn't get deleted. It got replaced.</p>
+    </div>
+
+    <div class="topic-card">
+      <span class="topic-tag">Team Structure</span>
+      <h3>Why I removed my entire EM layer</h3>
+      <p>From traditional teams with engineering managers to flat with 30 directs. Some people thrived. Others struggled. Here's what actually happened.</p>
+    </div>
+
+    <div class="topic-card">
+      <span class="topic-tag">Philosophy</span>
+      <h3>The manager-of-one model</h3>
+      <p>Every person owns their output, their growth, their judgment calls. Trust is the foundation. AI gives you observability without micromanagement.</p>
+    </div>
+  </section>
+
+  <section class="audience">
+    <div class="audience-inner">
+      <h2>This is for you if</h2>
+      <ul>
+        <li>Your team is slower than it should be and you know the structure is the problem</li>
+        <li>You're trying to figure out how AI changes your team, not just your product</li>
+        <li>You're a builder at heart who got pulled into management and never quite let go</li>
+        <li>You want practical advice from someone in it, not someone who left five years ago to consult</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="bottom-cta">
+    <h2>I'm building it in real time.</h2>
+    <p class="sub">Sign up and be one of the first to get access.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+    <div class="coaching-cta">
+      Already know you want to talk? <a href="#">Book a session →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Still Building · <a href="https://nobodyiscertain.com">Jamie Wagner</a></p>
+  </footer>
+
+</body>
+</html>

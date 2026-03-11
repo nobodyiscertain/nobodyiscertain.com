@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Melodaze — Rediscover Your Record Collection</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #fafafa;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 24px;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 80px;
+      font-weight: 500;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 40px;
+    }
+
+    h1 span {
+      display: block;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: #666;
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto 60px;
+      font-weight: 400;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      padding: 16px 40px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      font-weight: 500;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: background 0.2s ease;
+    }
+
+    .cta-btn:hover {
+      background: #333;
+    }
+
+    .note {
+      margin-top: 80px;
+      font-size: 0.82rem;
+      color: #bbb;
+      line-height: 1.8;
+    }
+
+    .note span {
+      display: block;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: #ddd;
+      margin: 60px auto;
+    }
+
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      font-size: 0.85rem;
+      color: #999;
+      font-weight: 400;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 40px 20px; }
+      .logo { margin-bottom: 50px; }
+      .features { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">Melodaze</div>
+
+    <h1>
+      <span>Rediscover</span>
+      <span>your records.</span>
+    </h1>
+
+    <p class="subtitle">
+      Connect your Discogs collection. Get smart suggestions for what to spin next. No algorithms trying to sell you anything.
+    </p>
+
+    <div class="features">
+      <span class="feature">Your collection</span>
+      <span class="feature">Your taste</span>
+      <span class="feature">Your next spin</span>
+    </div>
+
+    <a href="https://melodaze.app" class="cta-btn">Sign in with Discogs</a>
+
+    <div class="divider"></div>
+
+    <div class="note">
+      <span>Just you and your records.</span>
+      <span>Nothing more, nothing less.</span>
+    </div>
+  </div>
+</body>
+</html>
