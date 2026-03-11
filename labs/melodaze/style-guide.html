@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Melodaze — Design System</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #fafafa;
+      color: #111;
+      line-height: 1.6;
+      padding: 60px 40px;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    /* Header */
+    .guide-header {
+      margin-bottom: 80px;
+    }
+
+    .guide-header h1 {
+      font-size: 3rem;
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .guide-header .sub {
+      font-size: 1rem;
+      color: #999;
+      font-weight: 400;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 80px;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #bbb;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .section h2 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .section p.desc {
+      font-size: 0.9rem;
+      color: #888;
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Colors */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .color-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .color-swatch {
+      height: 80px;
+    }
+
+    .color-info {
+      padding: 12px 14px;
+    }
+
+    .color-name {
+      font-size: 0.82rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .color-hex {
+      font-size: 0.72rem;
+      color: #999;
+      font-family: monospace;
+    }
+
+    /* Typography */
+    .type-specimen {
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .type-specimen:last-child { border-bottom: none; }
+
+    .type-meta {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 12px;
+    }
+
+    .type-meta span {
+      font-size: 0.72rem;
+      color: #bbb;
+      font-family: monospace;
+    }
+
+    .type-display-1 { font-size: 4rem; font-weight: 300; letter-spacing: -0.04em; line-height: 1.05; }
+    .type-display-2 { font-size: 2.5rem; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
+    .type-heading { font-size: 1.4rem; font-weight: 500; letter-spacing: -0.02em; }
+    .type-subhead { font-size: 1rem; font-weight: 500; }
+    .type-body { font-size: 0.95rem; font-weight: 400; color: #666; line-height: 1.6; }
+    .type-small { font-size: 0.82rem; font-weight: 400; color: #999; }
+    .type-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: #bbb; }
+
+    /* Spacing */
+    .spacing-demo {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .spacing-item {
+      text-align: center;
+    }
+
+    .spacing-box {
+      background: #111;
+      margin-bottom: 8px;
+    }
+
+    .spacing-label {
+      font-size: 0.7rem;
+      color: #bbb;
+      font-family: monospace;
+    }
+
+    /* Components */
+    .component-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: #111;
+      color: #fff;
+      padding: 14px 32px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: #333; }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: #111;
+      padding: 13px 32px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid #ddd;
+      border-radius: 0;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: border-color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: #111; }
+
+    .btn-ghost {
+      display: inline-block;
+      background: transparent;
+      color: #999;
+      padding: 14px 0;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 400;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .btn-ghost:hover { color: #111; }
+
+    /* Form Elements */
+    .form-input {
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 0;
+      color: #111;
+      outline: none;
+      width: 280px;
+      transition: border-color 0.2s;
+    }
+
+    .form-input::placeholder { color: #ccc; }
+    .form-input:focus { border-color: #111; }
+
+    .form-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #999;
+      margin-bottom: 8px;
+    }
+
+    .form-group { margin-bottom: 24px; }
+
+    /* Toggle */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .toggle {
+      width: 40px;
+      height: 22px;
+      background: #ddd;
+      border-radius: 11px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .toggle.on { background: #111; }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.2s;
+    }
+
+    .toggle.on::after { transform: translateX(18px); }
+
+    .toggle-label {
+      font-size: 0.88rem;
+      font-weight: 400;
+    }
+
+    .toggle-desc {
+      font-size: 0.78rem;
+      color: #bbb;
+    }
+
+    /* Cards */
+    .card {
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 24px;
+      margin-bottom: 12px;
+    }
+
+    .card-flat {
+      background: transparent;
+      border-bottom: 1px solid #f0f0f0;
+      padding: 20px 0;
+    }
+
+    /* Stat */
+    .stat-grid {
+      display: flex;
+      gap: 0;
+    }
+
+    .stat-item {
+      padding: 24px 32px;
+      border-right: 1px solid #eee;
+      min-width: 140px;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      margin-bottom: 2px;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: #bbb;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Pills / Tags */
+    .pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border: 1px solid #ddd;
+      color: #888;
+      letter-spacing: 0.03em;
+    }
+
+    .pill.active {
+      background: #111;
+      border-color: #111;
+      color: #fff;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Status */
+    .status-connected {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: #111;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #111;
+    }
+
+    .status-dot.disconnected { background: #ddd; }
+
+    /* Icon style */
+    .icon-placeholder {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    /* Design Principles */
+    .principle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .principle h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .principle p {
+      font-size: 0.85rem;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    /* Nav mockup */
+    .nav-mockup {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 32px;
+    }
+
+    .nav-mockup .logo {
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: #999;
+    }
+
+    .nav-mockup .nav-items {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-mockup .nav-items a {
+      font-size: 0.82rem;
+      color: #bbb;
+      text-decoration: none;
+    }
+
+    .nav-mockup .nav-items a.active { color: #111; }
+
+    @media (max-width: 768px) {
+      body { padding: 40px 24px; }
+      .principle-grid { grid-template-columns: 1fr; }
+      .stat-grid { flex-direction: column; }
+      .stat-item { border-right: none; border-bottom: 1px solid #eee; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="guide-header">
+      <h1>Melodaze</h1>
+      <div class="sub">Design System — "Stripped Down" Direction</div>
+    </div>
+
+    <!-- Principles -->
+    <div class="section">
+      <div class="section-label">01 — Design Principles</div>
+      <div class="principle-grid">
+        <div class="principle">
+          <h3>Record sleeve, not SaaS</h3>
+          <p>Every screen should feel like a well-designed record sleeve. Clean, intentional, nothing extra. The album art does the talking.</p>
+        </div>
+        <div class="principle">
+          <h3>Let it breathe</h3>
+          <p>Generous whitespace everywhere. If a screen feels crowded, remove something. Space is a feature, not waste.</p>
+        </div>
+        <div class="principle">
+          <h3>Monochrome + album art</h3>
+          <p>The UI is black, white, and gray. The only color comes from album artwork. This makes every record pop.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colors -->
+    <div class="section">
+      <div class="section-label">02 — Color</div>
+      <p class="desc">A strict monochrome palette. Color comes exclusively from album artwork. The UI stays out of the way.</p>
+      <div class="color-grid">
+        <div class="color-card">
+          <div class="color-swatch" style="background: #111;"></div>
+          <div class="color-info">
+            <div class="color-name">Primary</div>
+            <div class="color-hex">#111111</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: #333;"></div>
+          <div class="color-info">
+            <div class="color-name">Primary Hover</div>
+            <div class="color-hex">#333333</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: #666;"></div>
+          <div class="color-info">
+            <div class="color-name">Body Text</div>
+            <div class="color-hex">#666666</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: #999;"></div>
+          <div class="color-info">
+            <div class="color-name">Muted</div>
+            <div class="color-hex">#999999</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: #ccc;"></div>
+          <div class="color-info">
+            <div class="color-name">Placeholder</div>
+            <div class="color-hex">#CCCCCC</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: #eee;"></div>
+          <div class="color-info">
+            <div class="color-name">Border</div>
+            <div class="color-hex">#EEEEEE</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: #fafafa; border-bottom: 1px solid #eee;"></div>
+          <div class="color-info">
+            <div class="color-name">Background</div>
+            <div class="color-hex">#FAFAFA</div>
+          </div>
+        </div>
+        <div class="color-card">
+          <div class="color-swatch" style="background: #fff; border-bottom: 1px solid #eee;"></div>
+          <div class="color-info">
+            <div class="color-name">Surface</div>
+            <div class="color-hex">#FFFFFF</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="section">
+      <div class="section-label">03 — Typography</div>
+      <p class="desc">One typeface: Space Grotesk. Geometric, clean, slightly quirky. Weight and size create hierarchy, not font changes.</p>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span>Display 1</span>
+          <span>300 / 4rem / -0.04em</span>
+        </div>
+        <div class="type-display-1">Rediscover your records.</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span>Display 2</span>
+          <span>300 / 2.5rem / -0.03em</span>
+        </div>
+        <div class="type-display-2">Sound & Color</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span>Heading</span>
+          <span>500 / 1.4rem / -0.02em</span>
+        </div>
+        <div class="type-heading">Alabama Shakes</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span>Subhead</span>
+          <span>500 / 1rem</span>
+        </div>
+        <div class="type-subhead">Suggestion Preferences</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span>Body</span>
+          <span>400 / 0.95rem / #666</span>
+        </div>
+        <div class="type-body">Sound & Color is the second studio album by American band Alabama Shakes, released on April 17, 2015, by ATO Records. The album debuted at number one on the Billboard 200.</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span>Small</span>
+          <span>400 / 0.82rem / #999</span>
+        </div>
+        <div class="type-small">Last synced 3 days ago</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">
+          <span>Label</span>
+          <span>500 / 0.7rem / uppercase / 0.2em tracking</span>
+        </div>
+        <div class="type-label">Release Year</div>
+      </div>
+    </div>
+
+    <!-- Spacing -->
+    <div class="section">
+      <div class="section-label">04 — Spacing Scale</div>
+      <p class="desc">Generous by default. When in doubt, add more space.</p>
+      <div class="spacing-demo">
+        <div class="spacing-item"><div class="spacing-box" style="width:4px; height:4px;"></div><div class="spacing-label">4</div></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:8px; height:8px;"></div><div class="spacing-label">8</div></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:12px; height:12px;"></div><div class="spacing-label">12</div></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:16px; height:16px;"></div><div class="spacing-label">16</div></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:24px; height:24px;"></div><div class="spacing-label">24</div></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:32px; height:32px;"></div><div class="spacing-label">32</div></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:48px; height:48px;"></div><div class="spacing-label">48</div></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:64px; height:64px;"></div><div class="spacing-label">64</div></div>
+        <div class="spacing-item"><div class="spacing-box" style="width:80px; height:80px;"></div><div class="spacing-label">80</div></div>
+      </div>
+    </div>
+
+    <!-- Components: Buttons -->
+    <div class="section">
+      <div class="section-label">05 — Buttons</div>
+      <p class="desc">Square corners. No border-radius. Buttons are deliberate, not bubbly.</p>
+      <div class="component-row">
+        <button class="btn-primary">Sign in with Discogs</button>
+        <button class="btn-secondary">Sync Now</button>
+        <button class="btn-ghost">View on Discogs →</button>
+      </div>
+    </div>
+
+    <!-- Components: Forms -->
+    <div class="section">
+      <div class="section-label">06 — Form Elements</div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="you@email.com">
+      </div>
+      <div style="margin-top: 32px;">
+        <div class="toggle-row">
+          <div class="toggle on"></div>
+          <div>
+            <div class="toggle-label">Exclude recently listened albums</div>
+            <div class="toggle-desc">Don't suggest albums you've recently listened to</div>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle"></div>
+          <div>
+            <div class="toggle-label">Only suggest unlistened albums</div>
+            <div class="toggle-desc">Only get suggestions for albums you haven't listened to yet</div>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle on"></div>
+          <div>
+            <div class="toggle-label">Match suggestions to time of day</div>
+            <div class="toggle-desc">Genre suggestions based on morning, afternoon, or evening</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Components: Stats -->
+    <div class="section">
+      <div class="section-label">07 — Stats</div>
+      <p class="desc">Thin weight numbers. Uppercase labels. Separated by hairline borders, not cards.</p>
+      <div class="stat-grid" style="border: 1px solid #eee; background: #fff;">
+        <div class="stat-item">
+          <div class="stat-num">728</div>
+          <div class="stat-label">Albums</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">14</div>
+          <div class="stat-label">Genres</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">173</div>
+          <div class="stat-label">Suggestions</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3d</div>
+          <div class="stat-label">Last Sync</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Components: Pills -->
+    <div class="section">
+      <div class="section-label">08 — Pills & Tags</div>
+      <div class="pill-row" style="margin-bottom: 16px;">
+        <span class="pill active">Rock</span>
+        <span class="pill">Electronic</span>
+        <span class="pill">Jazz</span>
+        <span class="pill">Hip Hop</span>
+        <span class="pill">Soul</span>
+      </div>
+      <div class="pill-row">
+        <span class="pill">Discogs</span>
+        <span class="pill">Wikipedia</span>
+        <span class="pill">Last.fm</span>
+        <span class="pill">MusicBrainz</span>
+      </div>
+    </div>
+
+    <!-- Components: Status -->
+    <div class="section">
+      <div class="section-label">09 — Status Indicators</div>
+      <div style="display: flex; gap: 32px; flex-wrap: wrap;">
+        <div class="status-connected">
+          <span class="status-dot"></span>
+          Connected to Discogs
+        </div>
+        <div class="status-connected">
+          <span class="status-dot disconnected"></span>
+          <span style="color: #999;">Not connected to Last.fm</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="section">
+      <div class="section-label">10 — Navigation</div>
+      <div class="nav-mockup">
+        <span class="logo">Melodaze</span>
+        <div class="nav-items">
+          <a href="#" class="active">Dashboard</a>
+          <a href="#">Search</a>
+          <a href="#">Analytics</a>
+          <a href="#">Settings</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Design Rules -->
+    <div class="section">
+      <div class="section-label">11 — Rules</div>
+      <div style="display: grid; gap: 16px; max-width: 600px;">
+        <div class="card-flat">
+          <div class="type-subhead" style="margin-bottom: 6px;">No border-radius</div>
+          <div class="type-small">Everything is square. Buttons, inputs, cards, pills. Sharp corners = intentional.</div>
+        </div>
+        <div class="card-flat">
+          <div class="type-subhead" style="margin-bottom: 6px;">No color in the UI</div>
+          <div class="type-small">Black, white, grays only. Album artwork is the only source of color on any screen.</div>
+        </div>
+        <div class="card-flat">
+          <div class="type-subhead" style="margin-bottom: 6px;">No shadows</div>
+          <div class="type-small">Use borders for depth, not box-shadows. Hairline borders (1px #eee) for separation.</div>
+        </div>
+        <div class="card-flat">
+          <div class="type-subhead" style="margin-bottom: 6px;">One typeface</div>
+          <div class="type-small">Space Grotesk everywhere. Use weight (300-700) and size for hierarchy.</div>
+        </div>
+        <div class="card-flat">
+          <div class="type-subhead" style="margin-bottom: 6px;">Labels are uppercase</div>
+          <div class="type-small">Small labels use 0.7rem, uppercase, generous letter-spacing. Always muted (#999 or #bbb).</div>
+        </div>
+        <div class="card-flat">
+          <div class="type-subhead" style="margin-bottom: 6px;">Space > decoration</div>
+          <div class="type-small">When choosing between adding a visual element or adding whitespace, choose whitespace.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
