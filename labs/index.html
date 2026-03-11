@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Labs — Design Explorations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      min-height: 100vh;
+      padding: 60px 40px;
+    }
+    .container { max-width: 700px; margin: 0 auto; }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: #555;
+      font-size: 0.9rem;
+      margin-bottom: 48px;
+    }
+    .product {
+      margin-bottom: 40px;
+    }
+    .product h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #ccc;
+    }
+    .product-desc {
+      font-size: 0.82rem;
+      color: #555;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .designs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .designs a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #151515;
+      border: 1px solid #222;
+      border-radius: 8px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .designs a:hover {
+      border-color: #555;
+      color: #fff;
+    }
+    hr {
+      border: none;
+      height: 1px;
+      background: #1a1a1a;
+      margin: 40px 0;
+    }
+    footer {
+      margin-top: 60px;
+      font-size: 0.75rem;
+      color: #333;
+    }
+    @media (max-width: 600px) {
+      body { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Labs</h1>
+    <p class="subtitle">Design explorations — 4 products, 3 directions each.</p>
+
+    <div class="product">
+      <h2>Melodaze</h2>
+      <p class="product-desc">Vinyl record rediscovery app. Connect Discogs, get suggestions for what to spin.</p>
+      <div class="designs">
+        <a href="melodaze/design-a.html">A — Stripped Down</a>
+        <a href="melodaze/design-b.html">B — Current But Better</a>
+        <a href="melodaze/design-c.html">C — Record Store</a>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="product">
+      <h2>Just Reply</h2>
+      <p class="product-desc">Email-based journaling for busy professionals. Reply to an email = journal entry.</p>
+      <div class="designs">
+        <a href="justreply/design-a.html">A — Executive Minimal</a>
+        <a href="justreply/design-b.html">B — Warm Professional</a>
+        <a href="justreply/design-c.html">C — The Anti-App</a>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="product">
+      <h2>Cahoots</h2>
+      <p class="product-desc">Remote team presence. See who's around, click to connect. No scheduling.</p>
+      <div class="designs">
+        <a href="cahoots/design-a.html">A — Clean SaaS</a>
+        <a href="cahoots/design-b.html">B — Human Connection</a>
+        <a href="cahoots/design-c.html">C — The Empty Office</a>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="product">
+      <h2>Crate Digger</h2>
+      <p class="product-desc">AI-powered record picks. 3 personalized vinyl recommendations monthly.</p>
+      <div class="designs">
+        <a href="crate-digger/design-a.html">A — The Monthly Dig</a>
+        <a href="crate-digger/design-b.html">B — Record Shop Counter</a>
+        <a href="crate-digger/design-c.html">C — AI Meets Analog</a>
+      </div>
+    </div>
+
+    <footer>
+      <p>Built by Prismo 🌀 — March 2026</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Melodaze — Rediscover Your Record Collection</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #1c1912;
+      color: #e8dcc8;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Subtle grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+    .content { position: relative; z-index: 2; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: #d4a54a;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .nav-login {
+      font-size: 0.85rem;
+      color: #8a7e6b;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      transition: color 0.2s;
+    }
+
+    .nav-login:hover { color: #d4a54a; }
+
+    /* Hero */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 40px 80px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1.05;
+      margin-bottom: 28px;
+      color: #f5eedd;
+    }
+
+    .hero h1 em {
+      color: #d4a54a;
+      font-style: italic;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: #8a7e6b;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 460px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      background: #d4a54a;
+      color: #1c1912;
+      padding: 16px 36px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .hero-cta:hover {
+      background: #e0b45e;
+      transform: translateY(-1px);
+    }
+
+    /* Crate visual */
+    .crate-visual {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      transform: rotate(2deg);
+    }
+
+    .crate-record {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .crate-record:hover {
+      transform: scale(1.05) rotate(-1deg);
+      z-index: 5;
+    }
+
+    .crate-record:nth-child(1) { background: linear-gradient(135deg, #c94b4b, #4b134f); }
+    .crate-record:nth-child(2) { background: linear-gradient(135deg, #2c3e50, #3498db); }
+    .crate-record:nth-child(3) { background: linear-gradient(135deg, #f39c12, #e74c3c); }
+    .crate-record:nth-child(4) { background: linear-gradient(135deg, #1a1a2e, #e94560); }
+    .crate-record:nth-child(5) { background: linear-gradient(135deg, #0f3443, #34e89e); }
+    .crate-record:nth-child(6) { background: linear-gradient(135deg, #654ea3, #eaafc8); }
+    .crate-record:nth-child(7) { background: linear-gradient(135deg, #232526, #414345); }
+    .crate-record:nth-child(8) { background: linear-gradient(135deg, #c6426e, #642b73); }
+    .crate-record:nth-child(9) { background: linear-gradient(135deg, #2c3e50, #fd746c); }
+
+    .crate-record::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.15);
+    }
+
+    /* Divider */
+    .section-divider {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .section-divider hr {
+      border: none;
+      height: 1px;
+      background: #2e281e;
+    }
+
+    /* How It Works */
+    .how-it-works {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .how-it-works h2 {
+      font-size: 2rem;
+      color: #d4a54a;
+      margin-bottom: 48px;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .step {
+      border-left: 2px solid #2e281e;
+      padding-left: 24px;
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: #2e281e;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .step h3 {
+      font-size: 1.2rem;
+      color: #f5eedd;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .step p {
+      font-size: 0.92rem;
+      color: #6b6152;
+      line-height: 1.6;
+    }
+
+    /* Quote */
+    .quote-section {
+      background: #16130e;
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .quote-section blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-style: italic;
+      color: #d4a54a;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    /* Manifesto */
+    .manifesto {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .manifesto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .manifesto-item {
+      background: #231f18;
+      border: 1px solid #2e281e;
+      padding: 28px;
+      border-radius: 4px;
+    }
+
+    .manifesto-item .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #6b6152;
+      margin-bottom: 8px;
+    }
+
+    .manifesto-item p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: #e8dcc8;
+      line-height: 1.4;
+    }
+
+    /* CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 80px 40px;
+      border-top: 1px solid #2e281e;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      font-weight: 400;
+      color: #f5eedd;
+    }
+
+    .bottom-cta p {
+      color: #6b6152;
+      margin-bottom: 32px;
+      font-size: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #2e281e;
+    }
+
+    footer p {
+      font-size: 0.78rem;
+      color: #3d3628;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 40px 24px 60px;
+        text-align: center;
+      }
+      .hero-sub { margin: 0 auto 40px; }
+      .crate-visual { transform: rotate(0deg); max-width: 280px; margin: 0 auto; }
+      .steps { grid-template-columns: 1fr; gap: 32px; }
+      .manifesto-grid { grid-template-columns: 1fr; }
+      .how-it-works, .manifesto, .bottom-cta { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+
+    <nav>
+      <a href="#" class="nav-logo">melodaze</a>
+      <a href="#" class="nav-login">login</a>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <h1>Dust off <em>that record</em> you forgot you owned.</h1>
+        <p class="hero-sub">You've got shelves full of vinyl. When's the last time you played half of it? Melodaze digs through your Discogs collection and reminds you what's worth spinning.</p>
+        <a href="#" class="hero-cta">Sign in with Discogs</a>
+      </div>
+      <div class="crate-visual">
+        <div class="crate-record"></div>
+        <div class="crate-record"></div>
+        <div class="crate-record"></div>
+        <div class="crate-record"></div>
+        <div class="crate-record"></div>
+        <div class="crate-record"></div>
+        <div class="crate-record"></div>
+        <div class="crate-record"></div>
+        <div class="crate-record"></div>
+      </div>
+    </section>
+
+    <div class="section-divider"><hr></div>
+
+    <section class="how-it-works">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Connect your crates</h3>
+          <p>Sign in with Discogs. We pull your entire collection — every LP, every 7", every weird import pressing.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>We do the digging</h3>
+          <p>Melodaze finds the records you haven't touched in months. The ones buried behind the new stuff. The ones you forgot you loved.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Drop the needle</h3>
+          <p>Pull it off the shelf. Put it on. Remember why you bought it in the first place.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-section">
+      <blockquote>"The best record in your collection is the one you forgot you owned."</blockquote>
+    </section>
+
+    <section class="manifesto">
+      <div class="manifesto-grid">
+        <div class="manifesto-item">
+          <div class="label">This is</div>
+          <p>A love letter to your record collection</p>
+        </div>
+        <div class="manifesto-item">
+          <div class="label">This is not</div>
+          <p>Another streaming algorithm</p>
+        </div>
+        <div class="manifesto-item">
+          <div class="label">Built for</div>
+          <p>People who own records and love playing them</p>
+        </div>
+        <div class="manifesto-item">
+          <div class="label">Not built for</div>
+          <p>People who think vinyl is a trend</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-cta">
+      <h2>Ready to dig?</h2>
+      <p>Free. No catch. Just your records, resurfaced.</p>
+      <a href="#" class="hero-cta">Sign in with Discogs</a>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Melodaze — Made for crate diggers, by a crate digger.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

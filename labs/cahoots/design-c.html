@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cahoots — The Empty Office</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👥</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0c0c0c;
+      color: #ccc;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, blockquote { font-family: 'Newsreader', Georgia, serif; }
+
+    /* Manifesto Hero */
+    .manifesto-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+      position: relative;
+    }
+
+    /* Empty grid background */
+    .empty-grid {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      gap: 12px;
+      opacity: 0.06;
+    }
+
+    .empty-tile {
+      width: 80px;
+      height: 60px;
+      border: 1px solid #fff;
+      border-radius: 6px;
+    }
+
+    .manifesto-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.2;
+      max-width: 700px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+      color: #e5e5e5;
+    }
+
+    .manifesto-hero h1 em {
+      font-style: italic;
+      color: #ef4444;
+    }
+
+    .manifesto-hero .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      font-size: 0.75rem;
+      color: #333;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Chapters */
+    .chapter {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 100px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .chapter-num {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #333;
+      margin-bottom: 24px;
+    }
+
+    .chapter h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 24px;
+      color: #e5e5e5;
+      line-height: 1.3;
+    }
+
+    .chapter p {
+      font-size: 1rem;
+      color: #777;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .chapter p:last-child { margin-bottom: 0; }
+
+    .chapter .emphasis {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #aaa;
+      margin: 32px 0;
+      padding-left: 20px;
+      border-left: 2px solid #222;
+    }
+
+    /* The Reveal */
+    .reveal {
+      padding: 100px 40px;
+      text-align: center;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .reveal h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      color: #e5e5e5;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .reveal .logo-reveal {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ef4444;
+      letter-spacing: 0.05em;
+      margin-bottom: 24px;
+    }
+
+    .reveal p {
+      font-size: 1.05rem;
+      color: #666;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    /* How it works - minimal */
+    .how-minimal {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .how-steps {
+      display: grid;
+      gap: 0;
+    }
+
+    .how-step {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid #151515;
+    }
+
+    .how-step:last-child { border-bottom: none; }
+
+    .how-step .num {
+      font-family: 'Newsreader', serif;
+      font-size: 2rem;
+      color: #222;
+      font-weight: 300;
+    }
+
+    .how-step h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #ccc;
+      margin-bottom: 6px;
+    }
+
+    .how-step p {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* CTA */
+    .final-cta {
+      text-align: center;
+      padding: 100px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .final-cta h2 {
+      font-size: 2.4rem;
+      font-weight: 300;
+      margin-bottom: 12px;
+      color: #e5e5e5;
+    }
+
+    .final-cta .sub {
+      color: #555;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #151515;
+      border: 1px solid #222;
+      border-radius: 6px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #444; }
+    .signup-form input:focus { border-color: #ef4444; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: #dc2626; }
+
+    .signup-note {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #333;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer p { font-size: 0.75rem; color: #222; }
+
+    @media (max-width: 600px) {
+      .manifesto-hero { min-height: 80vh; padding: 40px 24px; }
+      .empty-grid { grid-template-columns: repeat(3, 60px); gap: 8px; }
+      .empty-tile { width: 60px; height: 45px; }
+      .chapter { padding: 60px 24px; }
+      .signup-form { flex-direction: column; }
+      .how-step { grid-template-columns: 40px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="manifesto-hero">
+    <div class="empty-grid">
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+      <div class="empty-tile"></div>
+    </div>
+    <h1>Remote work gave us freedom.<br>It took something <em>else</em>.</h1>
+    <span class="scroll-hint">↓ scroll</span>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-num">Chapter 01</div>
+    <h2>The empty office</h2>
+    <p>There used to be a moment. You'd walk into the office, coffee in hand, and just... know. Who was in. Who was heads-down. Who was free to talk.</p>
+    <p>It wasn't a feature. Nobody built it. It was just the natural byproduct of sharing a space.</p>
+    <p class="emphasis">Remote work deleted that moment.</p>
+    <p>Now you send Slack messages into the void. You schedule 30-minute meetings for 2-minute questions. You don't know if someone's deep in flow or scrolling Twitter — so you default to async, and the conversation that would have taken 90 seconds takes a day.</p>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-num">Chapter 02</div>
+    <h2>What we actually lost</h2>
+    <p>Not the commute. Not the fluorescent lights. Not the sad desk lunch.</p>
+    <p>We lost the <strong>ambient awareness</strong> of working alongside other humans. The ability to glance up and see that your teammate is at their desk. The spontaneous "hey, got a sec?" that led to the best ideas. The feeling that you're building something <em>together</em>, even on a quiet Tuesday.</p>
+    <p>Video calls don't replace this. Slack doesn't replace this. Virtual offices with pixel avatars definitely don't replace this.</p>
+  </section>
+
+  <section class="chapter">
+    <div class="chapter-num">Chapter 03</div>
+    <h2>What if you could bring it back?</h2>
+    <p>Not the office. Just the awareness. The presence. The ability to see who's around and connect in one click.</p>
+    <p>That's the entire idea behind what we're building.</p>
+  </section>
+
+  <section class="reveal">
+    <div class="logo-reveal">cahoots</div>
+    <h2>See your team.<br>Click to connect.</h2>
+    <p>A lightweight presence grid for remote teams. Periodic snapshots show who's around. Click someone's tile to instantly connect via video. No scheduling, no friction.</p>
+  </section>
+
+  <section class="how-minimal">
+    <div class="how-steps">
+      <div class="how-step">
+        <span class="num">1</span>
+        <div>
+          <h3>Your team in a grid</h3>
+          <p>Everyone shows up as a tile. Webcam snapshots update every few seconds — like a lo-fi presence indicator.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="num">2</span>
+        <div>
+          <h3>See who's around</h3>
+          <p>Available, busy, away — at a glance. No "are you free?" messages. You can see for yourself.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="num">3</span>
+        <div>
+          <h3>Click to talk</h3>
+          <p>See someone available? Click their tile. Instant video. The conversation that would have been a 30-minute calendar hold happens in 2 minutes.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <span class="num">4</span>
+        <div>
+          <h3>Go offline whenever</h3>
+          <p>Heads-down time is sacred. Toggle away when you need to focus. This is about connection, not surveillance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <h2>We're building this.</h2>
+    <p class="sub">Join the waitlist and be the first to try it.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Join the Waitlist</button>
+    </form>
+    <p class="signup-note">No spam. One email when early access opens.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Cahoots</p>
+  </footer>
+
+</body>
+</html>

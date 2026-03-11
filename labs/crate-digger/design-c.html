@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crate Digger — AI Meets Analog</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0d0d0d;
+      color: #e0e0e0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, blockquote { font-family: 'Playfair Display', serif; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-logo .dot { color: #f97316; }
+
+    /* Hero */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 40px 60px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+
+    .hero h1 .ai { color: #f97316; font-style: italic; }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: #777;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 460px;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #555; }
+    .signup-form input:focus { border-color: #f97316; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #f97316;
+      color: #0d0d0d;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: #ea580c; }
+
+    .signup-note {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #444;
+    }
+
+    /* Flow Visual */
+    .flow-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .flow-node {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 20px 28px;
+      text-align: center;
+      width: 240px;
+      transition: border-color 0.2s;
+    }
+
+    .flow-node:hover { border-color: #f97316; }
+
+    .flow-node .icon { font-size: 1.6rem; margin-bottom: 8px; }
+    .flow-node .label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #ccc;
+    }
+
+    .flow-node .sub {
+      font-size: 0.72rem;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .flow-arrow {
+      font-size: 1.2rem;
+      color: #2a2a2a;
+    }
+
+    .flow-node.highlight {
+      border-color: #f97316;
+      background: #1a1208;
+    }
+
+    .flow-node.highlight .label { color: #f97316; }
+
+    /* How it works */
+    .how-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .how-section h2 {
+      font-size: 2rem;
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 48px;
+      color: #fff;
+    }
+
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .how-card {
+      background: #1a1a1a;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 28px;
+    }
+
+    .how-card .tag {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #f97316;
+      margin-bottom: 10px;
+    }
+
+    .how-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #ddd;
+    }
+
+    .how-card p {
+      font-size: 0.85rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* Quote */
+    .quote-section {
+      padding: 80px 40px;
+      text-align: center;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .quote-section blockquote {
+      font-size: 1.6rem;
+      font-weight: 400;
+      font-style: italic;
+      color: #f97316;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+
+    /* Contrast */
+    .contrast-section {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .contrast-section h2 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #fff;
+    }
+
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .contrast-col h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #222;
+    }
+
+    .contrast-col.analog h3 { color: #f97316; }
+    .contrast-col.digital h3 { color: #444; }
+
+    .contrast-col ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .contrast-col ul li {
+      font-size: 0.9rem;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    .contrast-col.analog ul li { color: #aaa; }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2.4rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .bottom-cta p {
+      color: #555;
+      margin-bottom: 32px;
+    }
+
+    .bottom-cta .signup-form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer p { font-size: 0.75rem; color: #222; }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 50px 24px 60px;
+        gap: 40px;
+      }
+      .signup-form { flex-direction: column; }
+      .flow-visual { order: -1; }
+      .flow-node { width: 200px; }
+      .how-grid { grid-template-columns: 1fr; }
+      .contrast-grid { grid-template-columns: 1fr; gap: 32px; }
+      .how-section, .contrast-section, .bottom-cta { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">crate<span class="dot">.</span>digger</a>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <h1>Cutting-edge <span class="ai">AI</span>.<br>Dusty vinyl crates.</h1>
+      <p class="hero-desc">Connect your Discogs collection and Spotify. Our AI learns your taste — not just genres, your <em>actual</em> collection — and delivers 3 personalized record picks to your inbox every month.</p>
+      <form class="signup-form" action="#" method="post">
+        <input type="email" placeholder="you@email.com" required>
+        <button type="submit">Start Digging</button>
+      </form>
+      <p class="signup-note">Free. No shipping. Just great picks.</p>
+    </div>
+
+    <div class="flow-visual">
+      <div class="flow-node">
+        <div class="icon">📦</div>
+        <div class="label">Your Discogs Collection</div>
+        <div class="sub">What you own</div>
+      </div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-node">
+        <div class="icon">🎧</div>
+        <div class="label">Your Spotify History</div>
+        <div class="sub">What you're listening to</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node highlight">
+        <div class="icon">🧠</div>
+        <div class="label">AI Curation Engine</div>
+        <div class="sub">Taste analysis + gap detection</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node">
+        <div class="icon">📬</div>
+        <div class="label">3 Picks in Your Inbox</div>
+        <div class="sub">Once a month, with buy links</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-section">
+    <h2>What makes this different</h2>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="tag">Your Collection</div>
+        <h3>We start with what you own</h3>
+        <p>Not your streaming history. Not your likes. Your actual vinyl collection. The records you chose to spend money on and put on a shelf.</p>
+      </div>
+      <div class="how-card">
+        <div class="tag">AI Reasoning</div>
+        <h3>We tell you why</h3>
+        <p>Every pick comes with a written explanation. Not "because you liked X" — real reasoning about your taste, your gaps, and the artist's story.</p>
+      </div>
+      <div class="how-card">
+        <div class="tag">No Shipping</div>
+        <h3>Recommendations, not a box</h3>
+        <p>We're not a subscription box. No inventory, no fulfillment. Just 3 great picks and links to buy them on Discogs when you're ready.</p>
+      </div>
+      <div class="how-card">
+        <div class="tag">Personal</div>
+        <h3>Like a friend at the shop</h3>
+        <p>The recommendations should feel like they're coming from someone who's browsed your shelves, not an algorithm that saw your data.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <blockquote>"The best record store employee in the world can't browse your shelves at home. We can."</blockquote>
+  </section>
+
+  <section class="contrast-section">
+    <h2>Old soul, new brain</h2>
+    <div class="contrast-grid">
+      <div class="contrast-col analog">
+        <h3>The analog part</h3>
+        <ul>
+          <li>Physical vinyl — warm, imperfect, beautiful</li>
+          <li>Curated picks that feel personal, not algorithmic</li>
+          <li>The joy of discovering a record you didn't know existed</li>
+          <li>Delivered by email — simple, no app required</li>
+        </ul>
+      </div>
+      <div class="contrast-col digital">
+        <h3>The AI part</h3>
+        <ul>
+          <li>Taste analysis across your full collection + listening history</li>
+          <li>Gap detection — what's conspicuously missing</li>
+          <li>Cross-genre pattern matching humans can't do at scale</li>
+          <li>Gets smarter over time as your collection grows</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom-cta">
+    <h2>Start digging.</h2>
+    <p>3 picks. Once a month. Free.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Start Digging</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Crate Digger</p>
+  </footer>
+
+</body>
+</html>

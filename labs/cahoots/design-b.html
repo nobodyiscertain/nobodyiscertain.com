@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cahoots — Remote Work Lost Something. We're Bringing It Back.</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👥</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #fdfcfa;
+      color: #2a2a2a;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, blockquote { font-family: 'Source Serif 4', Georgia, serif; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2a2a2a;
+      text-decoration: none;
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 100px 40px 80px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: #b45309;
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: #777;
+      max-width: 520px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #fff;
+      border: 1px solid #e0dcd5;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #bbb; }
+    .signup-form input:focus { border-color: #b45309; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #b45309;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: #92400e; }
+
+    .signup-note {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #ccc;
+    }
+
+    /* Story Section */
+    .story {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #eeebe5;
+    }
+
+    .story-block {
+      margin-bottom: 48px;
+    }
+
+    .story-block:last-child { margin-bottom: 0; }
+
+    .story-block h2 {
+      font-size: 1.6rem;
+      font-weight: 300;
+      margin-bottom: 16px;
+      color: #1a1a1a;
+    }
+
+    .story-block p {
+      font-size: 1rem;
+      color: #777;
+      line-height: 1.8;
+    }
+
+    .story-block p + p {
+      margin-top: 16px;
+    }
+
+    .story-block .moment {
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      color: #b45309;
+      font-size: 1.05rem;
+    }
+
+    /* People Grid */
+    .people-section {
+      background: #f5f2ed;
+      padding: 80px 40px;
+    }
+
+    .people-section h2 {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 48px;
+      color: #1a1a1a;
+    }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .person-tile {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform 0.2s;
+    }
+
+    .person-tile:hover { transform: translateY(-2px); }
+
+    .person-photo {
+      height: 100px;
+      position: relative;
+    }
+
+    .person-photo.available { filter: none; }
+    .person-photo.away { filter: grayscale(1) brightness(1.1); opacity: 0.6; }
+
+    .person-tile:nth-child(1) .person-photo { background: linear-gradient(135deg, #fde68a, #fbbf24); }
+    .person-tile:nth-child(2) .person-photo { background: linear-gradient(135deg, #c4b5fd, #8b5cf6); }
+    .person-tile:nth-child(3) .person-photo { background: linear-gradient(135deg, #a7f3d0, #34d399); }
+    .person-tile:nth-child(4) .person-photo { background: linear-gradient(135deg, #fca5a5, #ef4444); }
+
+    .person-detail {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .person-detail .name {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #444;
+    }
+
+    .person-detail .status {
+      font-size: 0.7rem;
+      color: #aaa;
+    }
+
+    .person-detail .status.online { color: #22c55e; }
+
+    /* How it feels */
+    .feelings {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .feelings h2 {
+      font-size: 1.8rem;
+      font-weight: 300;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .feeling-items {
+      display: grid;
+      gap: 24px;
+    }
+
+    .feeling-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .feeling-item .emoji {
+      font-size: 1.6rem;
+      text-align: center;
+      padding-top: 4px;
+    }
+
+    .feeling-item h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 4px;
+      color: #333;
+    }
+
+    .feeling-item p {
+      font-size: 0.88rem;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    /* Quote */
+    .quote {
+      background: #f5f2ed;
+      padding: 80px 40px;
+      text-align: center;
+    }
+
+    .quote blockquote {
+      font-size: 1.6rem;
+      font-weight: 300;
+      font-style: italic;
+      color: #b45309;
+      max-width: 560px;
+      margin: 0 auto 16px;
+      line-height: 1.4;
+    }
+
+    .quote cite {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-size: 0.82rem;
+      color: #aaa;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 80px 40px;
+      border-top: 1px solid #eeebe5;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2.2rem;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .bottom-cta p {
+      color: #999;
+      margin-bottom: 32px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #eeebe5;
+    }
+
+    footer p { font-size: 0.78rem; color: #ccc; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 60px 24px; }
+      .signup-form { flex-direction: column; }
+      .people-grid { grid-template-columns: repeat(2, 1fr); }
+      .story, .feelings, .bottom-cta { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">cahoots</a>
+  </nav>
+
+  <section class="hero">
+    <h1>Remote work is great.<br>Until it's <em>lonely</em>.</h1>
+    <p class="hero-desc">Cahoots brings back the one thing remote work lost: knowing who's around and being able to just... talk. No scheduling. No meeting links. Just people.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Join the Waitlist</button>
+    </form>
+    <p class="signup-note">Early access opening soon.</p>
+  </section>
+
+  <section class="story">
+    <div class="story-block">
+      <h2>Remember this?</h2>
+      <p>You glance across the office. Sarah's at her desk — you can see she's not in a meeting. You walk over. "Hey, quick question about the API changes." Three minutes later, you're unblocked.</p>
+      <p class="moment">That moment doesn't exist in remote work. Until now.</p>
+    </div>
+
+    <div class="story-block">
+      <h2>How Cahoots works</h2>
+      <p>Everyone on your team shows up in a simple grid. Periodic webcam snapshots (every 10-20 seconds) create ambient awareness — you can see who's around without asking.</p>
+      <p>See someone available? Click their tile. Grayscale snapshot transitions to live color video. You're connected. No calendar invite, no Zoom link, no "can you hear me?" Just a conversation.</p>
+    </div>
+  </section>
+
+  <section class="people-section">
+    <h2>Your team, at a glance</h2>
+    <div class="people-grid">
+      <div class="person-tile">
+        <div class="person-photo available"></div>
+        <div class="person-detail">
+          <span class="name">Sarah</span>
+          <span class="status online">● available</span>
+        </div>
+      </div>
+      <div class="person-tile">
+        <div class="person-photo available"></div>
+        <div class="person-detail">
+          <span class="name">Marcus</span>
+          <span class="status">● busy</span>
+        </div>
+      </div>
+      <div class="person-tile">
+        <div class="person-photo available"></div>
+        <div class="person-detail">
+          <span class="name">Jamie</span>
+          <span class="status online">● available</span>
+        </div>
+      </div>
+      <div class="person-tile">
+        <div class="person-photo away"></div>
+        <div class="person-detail">
+          <span class="name">Alex</span>
+          <span class="status">away</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="feelings">
+    <h2>What it feels like</h2>
+    <div class="feeling-items">
+      <div class="feeling-item">
+        <div class="emoji">☕</div>
+        <div>
+          <h3>Morning check-in without a meeting</h3>
+          <p>Open Cahoots with your coffee. See who's online. Wave or don't. Just knowing your team is there changes the vibe.</p>
+        </div>
+      </div>
+      <div class="feeling-item">
+        <div class="emoji">💡</div>
+        <div>
+          <h3>The spontaneous conversation</h3>
+          <p>That random "hey, I just had an idea" conversation that would never get a calendar invite. It just happens.</p>
+        </div>
+      </div>
+      <div class="feeling-item">
+        <div class="emoji">🎧</div>
+        <div>
+          <h3>Focus time that's actually respected</h3>
+          <p>Set yourself to busy. Nobody clicks. Nobody Slacks you "got a sec?" They can see you're heads-down.</p>
+        </div>
+      </div>
+      <div class="feeling-item">
+        <div class="emoji">🤙</div>
+        <div>
+          <h3>The two-minute unblock</h3>
+          <p>Instead of writing a Slack essay, you click their face and ask. Done in 90 seconds. Back to work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <blockquote>"The best meetings are the ones that never get scheduled."</blockquote>
+    <cite>— The thesis behind Cahoots</cite>
+  </section>
+
+  <section class="bottom-cta">
+    <h2>Work together, from anywhere.</h2>
+    <p>Early access coming soon.</p>
+    <form class="signup-form" action="#" method="post" style="margin: 0 auto;">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Join the Waitlist</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Cahoots</p>
+  </footer>
+
+</body>
+</html>
