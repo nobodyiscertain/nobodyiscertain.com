@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Still Building — A Living Playbook</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔨</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #111;
+      color: #ccc;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, blockquote { font-family: 'Newsreader', Georgia, serif; }
+
+    /* Nav */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* Hero - Manifesto style */
+    .hero {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 100px 40px 80px;
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #444;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      color: #f5f5f5;
+    }
+
+    .hero h1 .accent {
+      color: #ef4444;
+      font-style: italic;
+    }
+
+    .hero-essay {
+      font-size: 1.1rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .hero-essay p {
+      margin-bottom: 20px;
+    }
+
+    .hero-essay p:last-child { margin-bottom: 0; }
+
+    .hero-essay strong { color: #aaa; }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #444; }
+    .signup-form input:focus { border-color: #ef4444; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .signup-form button:hover { background: #dc2626; }
+
+    .signup-note {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #333;
+    }
+
+    /* Divider quote */
+    .divider-quote {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 40px;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .divider-quote blockquote {
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-style: italic;
+      color: #ef4444;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    /* Log entries - like a changelog */
+    .log-section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 40px;
+    }
+
+    .log-header h2 {
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: #ddd;
+    }
+
+    .log-header .live {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #ef4444;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .log-header .live::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #ef4444;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .log-entry {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .log-entry:last-child { border-bottom: none; }
+
+    .log-date {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.78rem;
+      color: #444;
+      padding-top: 3px;
+    }
+
+    .log-entry h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #ddd;
+      margin-bottom: 6px;
+    }
+
+    .log-entry p {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .log-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #ef4444;
+      border: 1px solid #2a1a1a;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 8px;
+    }
+
+    /* About */
+    .about-section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .about-flex {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    .about-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #333, #555);
+      flex-shrink: 0;
+    }
+
+    .about-text h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ddd;
+      margin-bottom: 4px;
+    }
+
+    .about-text .title {
+      font-size: 0.82rem;
+      color: #555;
+      margin-bottom: 16px;
+    }
+
+    .about-text p {
+      font-size: 0.92rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    /* What you're signing up for */
+    .promise {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .promise h2 {
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-bottom: 32px;
+      color: #ddd;
+    }
+
+    .promise-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .promise-item {
+      background: #1a1a1a;
+      border: 1px solid #222;
+      border-radius: 6px;
+      padding: 24px;
+    }
+
+    .promise-item .label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .promise-item p {
+      font-size: 0.9rem;
+      color: #aaa;
+      line-height: 1.4;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 80px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2.4rem;
+      font-weight: 300;
+      margin-bottom: 12px;
+      color: #f5f5f5;
+    }
+
+    .bottom-cta .sub {
+      color: #444;
+      margin-bottom: 32px;
+      font-size: 0.9rem;
+    }
+
+    .bottom-cta .signup-form { margin: 0 auto; }
+
+    .coaching-link {
+      margin-top: 24px;
+      font-size: 0.85rem;
+    }
+
+    .coaching-link a {
+      color: #555;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .coaching-link a:hover { color: #ef4444; }
+
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    footer p { font-size: 0.75rem; color: #222; }
+    footer a { color: #333; text-decoration: none; }
+    footer a:hover { color: #555; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 60px 24px; }
+      .signup-form { flex-direction: column; }
+      .log-entry { grid-template-columns: 1fr; gap: 8px; }
+      .about-flex { flex-direction: column; }
+      .promise-grid { grid-template-columns: 1fr; }
+      .log-section, .about-section, .promise, .bottom-cta { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Still Building</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-label">A living playbook by Jamie Wagner</div>
+    <h1>I manage 30 engineers. I removed every manager. I'm <span class="accent">still figuring it out</span>.</h1>
+
+    <div class="hero-essay">
+      <p>The org chart I inherited was designed for cheap capital and big teams. That era is over. <strong>AI changed what one person can build.</strong> The coordination layers I staffed up? They were friction.</p>
+      <p>So I flattened the whole thing. Removed the EM layer. Went to 30 direct reports. Built AI systems to handle what managers used to do. Some of it is working brilliantly. Some of it is a mess.</p>
+      <p>I'm documenting all of it. The wins, the failures, and the stuff I'm not sure about yet. This is the playbook I wish someone had handed me. Since nobody did, I'm writing it.</p>
+    </div>
+
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+    <p class="signup-note">Course, newsletter, coaching. You'll be first to know.</p>
+  </section>
+
+  <section class="divider-quote">
+    <blockquote>The best leaders are the ones who never stopped building.</blockquote>
+  </section>
+
+  <section class="log-section">
+    <div class="log-header">
+      <h2>The log</h2>
+      <span class="live">Live</span>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-date">Mar 2026</div>
+      <div>
+        <span class="log-tag">AI + Management</span>
+        <h3>Building a manager brain</h3>
+        <p>An AI system that preps for every 1-on-1, captures conversations, tracks follow-ups, and surfaces signals I'd miss. The management layer didn't get deleted. It got replaced.</p>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-date">Feb 2026</div>
+      <div>
+        <span class="log-tag">Team Structure</span>
+        <h3>The EM layer is gone</h3>
+        <p>From traditional teams with engineering managers to flat with 30 direct reports. Some people thrived, others struggled. Documenting what actually happened.</p>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-date">Feb 2026</div>
+      <div>
+        <span class="log-tag">Philosophy</span>
+        <h3>Manager of one</h3>
+        <p>Every person owns their output, their growth, their judgment calls. Trust is the foundation, but trust isn't blind. AI gives observability without micromanagement.</p>
+      </div>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-date">Jan 2026</div>
+      <div>
+        <span class="log-tag">Embrace the Suck</span>
+        <h3>The messy middle of a reorg</h3>
+        <p>Nobody writes about the part where half the team is confused and the other half is pretending they're not. I'm writing about it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="about-flex">
+      <div class="about-avatar"></div>
+      <div class="about-text">
+        <h3>Jamie Wagner</h3>
+        <div class="title">VP of Engineering at Kajabi · 30 direct reports · Still writing code</div>
+        <p>Building software since 2007. Got pulled into management because I was good at building things, and someone figured I'd be good at helping others build too. They were right. But I never stopped wanting to build.</p>
+        <p>No thought-leader fluff. No frameworks named after Greek gods. Just honest notes from someone in the middle of it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="promise">
+    <h2>What you're signing up for</h2>
+    <div class="promise-grid">
+      <div class="promise-item">
+        <div class="label">Weekly</div>
+        <p>Real notes on leading eng teams through the AI transition. What happened this week, not theory.</p>
+      </div>
+      <div class="promise-item">
+        <div class="label">Honest</div>
+        <p>The reorg stories, the hard conversations, the failures. Things people don't put on LinkedIn.</p>
+      </div>
+      <div class="promise-item">
+        <div class="label">Practical</div>
+        <p>Playbooks from doing, not consulting. Systems you can steal. Mistakes you can skip.</p>
+      </div>
+      <div class="promise-item">
+        <div class="label">Early Access</div>
+        <p>First in line for the course, coaching, and whatever this becomes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom-cta">
+    <h2>Still building.</h2>
+    <p class="sub">The playbook is being written. Get it as it happens.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+    <div class="coaching-link">
+      <a href="#">Already sold? Book a coaching session →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Still Building · <a href="https://nobodyiscertain.com">nobodyiscertain.com</a></p>
+  </footer>
+
+</body>
+</html>
