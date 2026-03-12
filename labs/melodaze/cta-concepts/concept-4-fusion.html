@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Melodaze CTA — Fusion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #fafafa;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    nav {
+      padding: 20px 40px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+      background: #fafafa;
+    }
+    .logo { font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 500; color: #999; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { font-size: 0.82rem; color: #bbb; text-decoration: none; }
+    .nav-links a.active { color: #111; }
+
+    /* Full screen dashboard */
+    .dashboard {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Full-screen grooves background */
+    .grooves-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .groove-ring {
+      position: absolute;
+      border: 1px solid transparent;
+      border-radius: 50%;
+      animation: pulseGroove 8s ease-in-out infinite;
+    }
+
+    /* Generate rings from small to full screen */
+    .groove-ring:nth-child(1)  { width: 80px;   height: 80px;   animation-delay: 0s; }
+    .groove-ring:nth-child(2)  { width: 130px;  height: 130px;  animation-delay: 0.25s; }
+    .groove-ring:nth-child(3)  { width: 180px;  height: 180px;  animation-delay: 0.5s; }
+    .groove-ring:nth-child(4)  { width: 240px;  height: 240px;  animation-delay: 0.75s; }
+    .groove-ring:nth-child(5)  { width: 310px;  height: 310px;  animation-delay: 1s; }
+    .groove-ring:nth-child(6)  { width: 390px;  height: 390px;  animation-delay: 1.25s; }
+    .groove-ring:nth-child(7)  { width: 480px;  height: 480px;  animation-delay: 1.5s; }
+    .groove-ring:nth-child(8)  { width: 580px;  height: 580px;  animation-delay: 1.75s; }
+    .groove-ring:nth-child(9)  { width: 700px;  height: 700px;  animation-delay: 2s; }
+    .groove-ring:nth-child(10) { width: 840px;  height: 840px;  animation-delay: 2.25s; }
+    .groove-ring:nth-child(11) { width: 1000px; height: 1000px; animation-delay: 2.5s; }
+    .groove-ring:nth-child(12) { width: 1200px; height: 1200px; animation-delay: 2.75s; }
+    .groove-ring:nth-child(13) { width: 1440px; height: 1440px; animation-delay: 3s; }
+    .groove-ring:nth-child(14) { width: 1720px; height: 1720px; animation-delay: 3.25s; }
+
+    @keyframes pulseGroove {
+      0%, 100% { border-color: transparent; }
+      20% { border-color: #e8e8e8; }
+      50% { border-color: #ddd; }
+      80% { border-color: #e8e8e8; }
+    }
+
+    /* Spindle dot in center */
+    .spindle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ccc;
+      border-radius: 50;
+      z-index: 1;
+    }
+
+    /* Hover: grooves intensify */
+    .dashboard:hover .groove-ring {
+      animation-duration: 4s;
+    }
+
+    /* Content layer */
+    .content {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+    }
+
+    /* Per-letter breathing DAZE */
+    .daze-word {
+      font-size: clamp(6rem, 18vw, 14rem);
+      font-weight: 300;
+      letter-spacing: -0.06em;
+      line-height: 0.85;
+      margin-bottom: 20px;
+      display: inline-flex;
+    }
+
+    .daze-letter {
+      display: inline-block;
+      animation: letterBreathe 4s ease-in-out infinite;
+    }
+
+    .daze-letter:nth-child(1) { animation-delay: 0s; }
+    .daze-letter:nth-child(2) { animation-delay: 0.6s; }
+    .daze-letter:nth-child(3) { animation-delay: 1.2s; }
+    .daze-letter:nth-child(4) { animation-delay: 1.8s; }
+
+    @keyframes letterBreathe {
+      0%, 100% { opacity: 0.2; }
+      40% { opacity: 1; }
+      60% { opacity: 1; }
+    }
+
+    /* Hover: all letters full */
+    .dashboard:hover .daze-letter {
+      animation: none;
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+
+    .tagline {
+      font-size: 0.92rem;
+      color: #999;
+      font-weight: 400;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+
+    .sub-tagline {
+      font-size: 0.78rem;
+      color: #bbb;
+      margin-bottom: 0;
+    }
+
+    /* Filter icon */
+    .filter-area {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .filter-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #ccc;
+      transition: color 0.2s;
+    }
+
+    .filter-icon:hover { color: #999; }
+
+    .filter-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #ccc;
+      margin-top: 4px;
+      transition: color 0.2s;
+    }
+
+    .filter-icon:hover ~ .filter-label,
+    .filter-area:hover .filter-label { color: #999; }
+
+    .genre-pills {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      pointer-events: none;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-area:hover .genre-pills {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .genre-pill {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border: 1px solid #ddd;
+      color: #999;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fafafa;
+      font-family: inherit;
+    }
+
+    .genre-pill:hover { border-color: #111; color: #111; }
+    .genre-pill.active { background: #111; border-color: #111; color: #fff; }
+
+    /* ===== Result state ===== */
+    .result-state {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      position: relative;
+    }
+
+    .album-art {
+      width: 360px;
+      height: 360px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460, #e94560);
+      animation: recordDrop 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    @keyframes recordDrop {
+      from { opacity: 0; transform: scale(0.85) translateY(-20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .album-title {
+      font-size: 2.4rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      margin-top: 28px;
+      margin-bottom: 4px;
+    }
+
+    .artist-name {
+      font-size: 1rem;
+      color: #999;
+      margin-bottom: 32px;
+    }
+
+    .result-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: #111;
+      color: #fff;
+      padding: 14px 32px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: #333; }
+
+    .btn-link {
+      font-size: 0.82rem;
+      color: #999;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      transition: color 0.2s;
+    }
+
+    .btn-link:hover { color: #111; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">MELODAZE</div>
+    <div class="nav-links">
+      <a href="#" class="active">Dashboard</a>
+      <a href="#">Collection</a>
+      <a href="#">Analytics</a>
+      <a href="#">Settings</a>
+    </div>
+  </nav>
+
+  <div class="dashboard" id="emptyState" onclick="showResult()">
+    <!-- Full-screen groove rings -->
+    <div class="grooves-bg">
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+      <div class="groove-ring"></div>
+    </div>
+
+    <!-- Center content -->
+    <div class="content">
+      <div class="daze-word">
+        <span class="daze-letter">D</span>
+        <span class="daze-letter">A</span>
+        <span class="daze-letter">Z</span>
+        <span class="daze-letter">E</span>
+      </div>
+      <div class="tagline">Rediscover what you already own</div>
+      <div class="sub-tagline">Tap to pull a record from your shelves</div>
+    </div>
+
+    <!-- Filter icon at bottom -->
+    <div class="filter-area" onclick="event.stopPropagation()">
+      <div class="filter-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="7" y1="12" x2="17" y2="12"></line>
+          <line x1="10" y1="18" x2="14" y2="18"></line>
+        </svg>
+      </div>
+      <div class="filter-label">Filter</div>
+      <div class="genre-pills">
+        <button class="genre-pill active">All</button>
+        <button class="genre-pill">Rock</button>
+        <button class="genre-pill">Jazz</button>
+        <button class="genre-pill">Electronic</button>
+        <button class="genre-pill">Hip Hop</button>
+        <button class="genre-pill">Soul</button>
+        <button class="genre-pill">Classical</button>
+        <button class="genre-pill">Folk</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result state -->
+  <div class="result-state" id="resultState">
+    <div class="album-art"></div>
+    <div class="album-title">In Rainbows</div>
+    <div class="artist-name">Radiohead</div>
+    <div class="result-actions">
+      <button class="btn-primary" onclick="showResult()">Get dazed again</button>
+      <button class="btn-link" onclick="resetState()">back</button>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.genre-pill').forEach(pill => {
+      pill.addEventListener('click', function(e) {
+        e.stopPropagation();
+        document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    function showResult() {
+      document.getElementById('emptyState').style.display = 'none';
+      document.getElementById('resultState').style.display = 'flex';
+    }
+
+    function resetState() {
+      document.getElementById('resultState').style.display = 'none';
+      document.getElementById('emptyState').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
