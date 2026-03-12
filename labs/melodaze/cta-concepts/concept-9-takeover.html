@@ -128,13 +128,6 @@
       border-radius: 50%;
       z-index: 14;
       pointer-events: none;
-      transform: scale(0);
-      transition: none;
-    }
-
-    .expand-circle.go {
-      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-      transform: scale(30);
     }
 
     /* Result content on black bg */
@@ -379,31 +372,44 @@
       });
     });
 
-    // Takeover animation
+    // Takeover animation — circle expands smoothly from spindle to fill screen
     function triggerTakeover() {
       const center = getCenter();
+      const maxDim = Math.max(window.innerWidth, window.innerHeight) * 2.5;
+      const duration = 800;
 
-      // Position expanding circle at center
+      // Position at center, starting at spindle size
       expandCircle.style.left = (center.x - 60) + 'px';
       expandCircle.style.top = (center.y - 60) + 'px';
-      expandCircle.style.transform = 'scale(0)';
+      expandCircle.style.width = '120px';
+      expandCircle.style.height = '120px';
+      expandCircle.style.transition = 'none';
+      expandCircle.style.display = 'block';
 
       // Force reflow
       expandCircle.offsetHeight;
 
-      // Expand
-      expandCircle.classList.add('go');
+      // Animate: grow from 120px to fill entire viewport
+      expandCircle.style.transition = `width ${duration}ms cubic-bezier(0.4, 0, 0.15, 1), height ${duration}ms cubic-bezier(0.4, 0, 0.15, 1), left ${duration}ms cubic-bezier(0.4, 0, 0.15, 1), top ${duration}ms cubic-bezier(0.4, 0, 0.15, 1)`;
+      expandCircle.style.width = maxDim + 'px';
+      expandCircle.style.height = maxDim + 'px';
+      expandCircle.style.left = (center.x - maxDim / 2) + 'px';
+      expandCircle.style.top = (center.y - maxDim / 2) + 'px';
 
-      // After expansion, show takeover
+      // Hide dashboard partway through
+      setTimeout(() => {
+        dashboard.style.display = 'none';
+      }, duration * 0.4);
+
+      // Show result content after circle has covered screen
       setTimeout(() => {
         takeover.classList.add('active');
-        dashboard.style.display = 'none';
-      }, 500);
+      }, duration * 0.6);
 
+      // Clean up circle after fully expanded
       setTimeout(() => {
-        expandCircle.classList.remove('go');
-        expandCircle.style.transform = 'scale(0)';
-      }, 800);
+        expandCircle.style.display = 'none';
+      }, duration + 100);
     }
 
     function resetState() {
