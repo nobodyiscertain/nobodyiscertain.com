@@ -361,17 +361,23 @@
         const closeness = Math.max(0, 1 - distFromCenter / maxDist);
 
         // Spindle grows: 80px → 240px as mouse approaches
-        // Use lerping to prevent flickering
+        // Once it reaches max, it stays there (never shrinks while hovering)
         const targetSize = 80 + closeness * closeness * 160;
-        const currentSize = parseFloat(spindle.style.width) || 80;
-        const smoothSize = currentSize + (targetSize - currentSize) * 0.15;
-        spindle.style.width = smoothSize + 'px';
-        spindle.style.height = smoothSize + 'px';
+        const currentSize = parseFloat(spindle.dataset.size) || 80;
+        // Only grow, never shrink while mouse is on the page
+        const newSize = Math.max(currentSize, targetSize);
+        spindle.dataset.size = newSize;
+        spindle.style.width = newSize + 'px';
+        spindle.style.height = newSize + 'px';
 
         // Show text inside spindle when large enough
         const textEl = spindle.querySelector('.spindle-text');
-        const targetTextOpacity = closeness > 0.5 ? Math.min(1, (closeness - 0.5) / 0.2) : 0;
-        textEl.style.opacity = targetTextOpacity;
+        const currentTextOp = parseFloat(spindle.dataset.textOp) || 0;
+        const targetTextOp = closeness > 0.5 ? Math.min(1, (closeness - 0.5) / 0.2) : 0;
+        // Only increase text opacity, don't fade out while hovering
+        const newTextOp = Math.max(currentTextOp, targetTextOp);
+        spindle.dataset.textOp = newTextOp;
+        textEl.style.opacity = newTextOp;
 
         // Cursor when close
         dashboard.style.cursor = distFromCenter < 140 ? 'pointer' : 'default';
@@ -392,6 +398,8 @@
       // Reset spindle to starting size
       spindle.style.width = '80px';
       spindle.style.height = '80px';
+      spindle.dataset.size = '80';
+      spindle.dataset.textOp = '0';
       spindle.querySelector('.spindle-text').style.opacity = '0';
       dashboard.style.cursor = '';
 
@@ -449,8 +457,15 @@
     function resetState() {
       takeover.classList.remove('active');
       dashboard.style.display = '';
-      rings.forEach(ring => {
-        ring.el.style.opacity = '0.35';
+      spindle.style.width = '80px';
+      spindle.style.height = '80px';
+      spindle.dataset.size = '80';
+      spindle.dataset.textOp = '0';
+      spindle.querySelector('.spindle-text').style.opacity = '0';
+      rings.forEach((ring, i) => {
+        ring.el.style.animation = `idleBreathe ${5 + (i % 4)}s ease-in-out infinite`;
+        ring.el.style.animationDelay = (i * 0.15) + 's';
+        ring.el.style.opacity = '';
         ring.el.style.borderColor = '';
       });
     }
