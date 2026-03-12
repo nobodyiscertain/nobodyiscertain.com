@@ -332,16 +332,34 @@
       rings.push({ el: ring, radius: pos / 2 });
     }
 
-    // Idle ring breathing
-    rings.forEach((ring, i) => {
-      ring.el.style.animation = `idleBreathe ${5 + (i % 4)}s ease-in-out infinite`;
-      ring.el.style.animationDelay = (i * 0.15) + 's';
-    });
+    // Idle breathing — radiating wave from center outward
+    let idleFrame;
+    let isMouseOnDashboard = false;
 
-    // Add idle breathe keyframes
-    const style = document.createElement('style');
-    style.textContent = `@keyframes idleBreathe { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.4; } }`;
-    document.head.appendChild(style);
+    function idleBreathe() {
+      if (isMouseOnDashboard) {
+        idleFrame = requestAnimationFrame(idleBreathe);
+        return;
+      }
+
+      const time = Date.now() / 1000;
+
+      rings.forEach((ring, i) => {
+        // Wave radiates outward from center — each ring is phase-shifted
+        const phase = i * 0.35;
+        const wave = Math.sin(time * 0.8 - phase);
+        // Map sin(-1..1) to opacity range
+        const opacity = 0.15 + (wave + 1) * 0.2; // 0.15 to 0.55
+        ring.el.style.opacity = opacity;
+
+        // Subtle border color shift with the wave
+        const gray = Math.round(235 - (wave + 1) * 15); // 235 to 205
+        ring.el.style.borderColor = `rgb(${gray}, ${gray}, ${gray})`;
+      });
+
+      idleFrame = requestAnimationFrame(idleBreathe);
+    }
+    idleBreathe();
 
     function getCenter() {
       const rect = dashboard.getBoundingClientRect();
@@ -349,6 +367,10 @@
     }
 
     let rafId;
+    dashboard.addEventListener('mouseenter', () => {
+      isMouseOnDashboard = true;
+    });
+
     dashboard.addEventListener('mousemove', (e) => {
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
@@ -361,10 +383,8 @@
         const closeness = Math.max(0, 1 - distFromCenter / maxDist);
 
         // Spindle grows: 80px → 240px as mouse approaches
-        // Once it reaches max, it stays there (never shrinks while hovering)
         const targetSize = 80 + closeness * closeness * 160;
         const currentSize = parseFloat(spindle.dataset.size) || 80;
-        // Only grow, never shrink while mouse is on the page
         const newSize = Math.max(currentSize, targetSize);
         spindle.dataset.size = newSize;
         spindle.style.width = newSize + 'px';
@@ -374,7 +394,6 @@
         const textEl = spindle.querySelector('.spindle-text');
         const currentTextOp = parseFloat(spindle.dataset.textOp) || 0;
         const targetTextOp = closeness > 0.5 ? Math.min(1, (closeness - 0.5) / 0.2) : 0;
-        // Only increase text opacity, don't fade out while hovering
         const newTextOp = Math.max(currentTextOp, targetTextOp);
         spindle.dataset.textOp = newTextOp;
         textEl.style.opacity = newTextOp;
@@ -382,34 +401,31 @@
         // Cursor when close
         dashboard.style.cursor = distFromCenter < 140 ? 'pointer' : 'default';
 
-        // Rings: follow mouse + proximity
+        // Rings: immediate response, stronger effect
         rings.forEach((ring) => {
-          ring.el.style.animation = 'none';
           const distFromRing = Math.abs(distFromCenter - ring.radius);
-          const proximity = Math.max(0, 1 - distFromRing / 160);
-          ring.el.style.opacity = 0.15 + proximity * 0.5 + closeness * 0.15;
-          const gray = Math.round(230 - proximity * 30);
+          // Sharper proximity — tighter falloff, more dramatic
+          const proximity = Math.max(0, 1 - distFromRing / 100);
+          // Stronger opacity range
+          const opacity = 0.1 + proximity * 0.75 + closeness * 0.2;
+          ring.el.style.opacity = Math.min(1, opacity);
+          // More contrast in the grays
+          const gray = Math.round(225 - proximity * 60 - closeness * 20);
           ring.el.style.borderColor = `rgb(${gray}, ${gray}, ${gray})`;
         });
       });
     });
 
     dashboard.addEventListener('mouseleave', () => {
-      // Reset spindle to starting size
+      isMouseOnDashboard = false;
+
+      // Reset spindle
       spindle.style.width = '80px';
       spindle.style.height = '80px';
       spindle.dataset.size = '80';
       spindle.dataset.textOp = '0';
       spindle.querySelector('.spindle-text').style.opacity = '0';
       dashboard.style.cursor = '';
-
-      // Restore ring breathing
-      rings.forEach((ring, i) => {
-        ring.el.style.animation = `idleBreathe ${5 + (i % 4)}s ease-in-out infinite`;
-        ring.el.style.animationDelay = (i * 0.15) + 's';
-        ring.el.style.opacity = '';
-        ring.el.style.borderColor = '';
-      });
     });
 
     // Takeover animation — circle expands smoothly from current spindle size
@@ -457,17 +473,12 @@
     function resetState() {
       takeover.classList.remove('active');
       dashboard.style.display = '';
+      isMouseOnDashboard = false;
       spindle.style.width = '80px';
       spindle.style.height = '80px';
       spindle.dataset.size = '80';
       spindle.dataset.textOp = '0';
       spindle.querySelector('.spindle-text').style.opacity = '0';
-      rings.forEach((ring, i) => {
-        ring.el.style.animation = `idleBreathe ${5 + (i % 4)}s ease-in-out infinite`;
-        ring.el.style.animationDelay = (i * 0.15) + 's';
-        ring.el.style.opacity = '';
-        ring.el.style.borderColor = '';
-      });
     }
 
     // Touch
