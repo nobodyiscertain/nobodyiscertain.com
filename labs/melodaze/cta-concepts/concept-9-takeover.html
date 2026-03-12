@@ -58,11 +58,11 @@
       transition: opacity 0.6s ease, border-color 0.6s ease;
     }
 
-    /* Spindle — larger, static */
+    /* Spindle — starts small, grows on mouse approach */
     .spindle {
       position: absolute;
-      width: 120px;
-      height: 120px;
+      width: 40px;
+      height: 40px;
       background: #111;
       border-radius: 50%;
       z-index: 5;
@@ -70,11 +70,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    .spindle:hover {
-      transform: scale(1.06);
+      transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                  height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .spindle-text {
@@ -85,11 +82,8 @@
       line-height: 1.5;
       opacity: 0;
       transition: opacity 0.4s ease;
-      padding: 0 12px;
-    }
-
-    .spindle:hover .spindle-text {
-      opacity: 1;
+      padding: 0 16px;
+      white-space: nowrap;
     }
 
     /* Black takeover */
@@ -119,15 +113,14 @@
       pointer-events: all;
     }
 
-    /* Expanding circle animation */
+    /* Expanding circle animation — hidden until triggered */
     .expand-circle {
       position: fixed;
-      width: 120px;
-      height: 120px;
       background: #111;
       border-radius: 50%;
       z-index: 14;
       pointer-events: none;
+      display: none;
     }
 
     /* Result content on black bg */
@@ -340,7 +333,17 @@
       rings.push({ el: ring, radius: pos / 2 });
     }
 
-    // Mouse proximity on rings (subtle)
+    // Idle ring breathing
+    rings.forEach((ring, i) => {
+      ring.el.style.animation = `idleBreathe ${5 + (i % 4)}s ease-in-out infinite`;
+      ring.el.style.animationDelay = (i * 0.15) + 's';
+    });
+
+    // Add idle breathe keyframes
+    const style = document.createElement('style');
+    style.textContent = `@keyframes idleBreathe { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.4; } }`;
+    document.head.appendChild(style);
+
     function getCenter() {
       const rect = dashboard.getBoundingClientRect();
       return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
@@ -355,10 +358,27 @@
           Math.pow(e.clientX - center.x, 2) + Math.pow(e.clientY - center.y, 2)
         );
 
+        const maxDist = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)) * 0.4;
+        const closeness = Math.max(0, 1 - distFromCenter / maxDist);
+
+        // Spindle grows: 40px → 200px as mouse approaches
+        const spindleSize = 40 + closeness * closeness * 160;
+        spindle.style.width = spindleSize + 'px';
+        spindle.style.height = spindleSize + 'px';
+
+        // Show text inside spindle when large enough
+        const textEl = spindle.querySelector('.spindle-text');
+        textEl.style.opacity = closeness > 0.55 ? Math.min(1, (closeness - 0.55) / 0.2) : 0;
+
+        // Cursor when close
+        dashboard.style.cursor = distFromCenter < 120 ? 'pointer' : 'default';
+
+        // Rings: follow mouse + proximity
         rings.forEach((ring) => {
+          ring.el.style.animation = 'none';
           const distFromRing = Math.abs(distFromCenter - ring.radius);
           const proximity = Math.max(0, 1 - distFromRing / 160);
-          ring.el.style.opacity = 0.2 + proximity * 0.5;
+          ring.el.style.opacity = 0.15 + proximity * 0.5 + closeness * 0.15;
           const gray = Math.round(230 - proximity * 30);
           ring.el.style.borderColor = `rgb(${gray}, ${gray}, ${gray})`;
         });
@@ -366,23 +386,34 @@
     });
 
     dashboard.addEventListener('mouseleave', () => {
-      rings.forEach(ring => {
-        ring.el.style.opacity = '0.35';
+      // Reset spindle
+      spindle.style.width = '';
+      spindle.style.height = '';
+      spindle.querySelector('.spindle-text').style.opacity = '0';
+      dashboard.style.cursor = '';
+
+      // Restore ring breathing
+      rings.forEach((ring, i) => {
+        ring.el.style.animation = `idleBreathe ${5 + (i % 4)}s ease-in-out infinite`;
+        ring.el.style.animationDelay = (i * 0.15) + 's';
+        ring.el.style.opacity = '';
         ring.el.style.borderColor = '';
       });
     });
 
-    // Takeover animation — circle expands smoothly from spindle to fill screen
+    // Takeover animation — circle expands smoothly from current spindle size
     function triggerTakeover() {
       const center = getCenter();
       const maxDim = Math.max(window.innerWidth, window.innerHeight) * 2.5;
       const duration = 800;
 
-      // Position at center, starting at spindle size
-      expandCircle.style.left = (center.x - 60) + 'px';
-      expandCircle.style.top = (center.y - 60) + 'px';
-      expandCircle.style.width = '120px';
-      expandCircle.style.height = '120px';
+      // Start from current spindle size
+      const currentSize = spindle.offsetWidth || 40;
+      const half = currentSize / 2;
+      expandCircle.style.left = (center.x - half) + 'px';
+      expandCircle.style.top = (center.y - half) + 'px';
+      expandCircle.style.width = currentSize + 'px';
+      expandCircle.style.height = currentSize + 'px';
       expandCircle.style.transition = 'none';
       expandCircle.style.display = 'block';
 
