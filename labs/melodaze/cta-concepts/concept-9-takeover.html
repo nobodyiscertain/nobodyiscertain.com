@@ -58,11 +58,11 @@
       transition: opacity 0.6s ease, border-color 0.6s ease;
     }
 
-    /* Spindle — starts small, grows on mouse approach */
+    /* Spindle — starts medium, grows on mouse approach */
     .spindle {
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 80px;
+      height: 80px;
       background: #111;
       border-radius: 50%;
       z-index: 5;
@@ -70,13 +70,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1),
-                  height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      /* No CSS transition — JS handles smooth lerping to prevent flicker */
     }
 
     .spindle-text {
       color: #fff;
-      font-size: 0.72rem;
+      font-size: 0.88rem;
       font-weight: 400;
       text-align: center;
       line-height: 1.5;
@@ -321,7 +320,7 @@
 
     // Generate rings with exponential spacing
     const rings = [];
-    let pos = 150; // start outside the spindle
+    let pos = 100; // start outside the spindle
     for (let i = 0; i < 28; i++) {
       const ring = document.createElement('div');
       ring.className = 'groove-ring';
@@ -361,17 +360,21 @@
         const maxDist = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)) * 0.4;
         const closeness = Math.max(0, 1 - distFromCenter / maxDist);
 
-        // Spindle grows: 40px → 200px as mouse approaches
-        const spindleSize = 40 + closeness * closeness * 160;
-        spindle.style.width = spindleSize + 'px';
-        spindle.style.height = spindleSize + 'px';
+        // Spindle grows: 80px → 240px as mouse approaches
+        // Use lerping to prevent flickering
+        const targetSize = 80 + closeness * closeness * 160;
+        const currentSize = parseFloat(spindle.style.width) || 80;
+        const smoothSize = currentSize + (targetSize - currentSize) * 0.15;
+        spindle.style.width = smoothSize + 'px';
+        spindle.style.height = smoothSize + 'px';
 
         // Show text inside spindle when large enough
         const textEl = spindle.querySelector('.spindle-text');
-        textEl.style.opacity = closeness > 0.55 ? Math.min(1, (closeness - 0.55) / 0.2) : 0;
+        const targetTextOpacity = closeness > 0.5 ? Math.min(1, (closeness - 0.5) / 0.2) : 0;
+        textEl.style.opacity = targetTextOpacity;
 
         // Cursor when close
-        dashboard.style.cursor = distFromCenter < 120 ? 'pointer' : 'default';
+        dashboard.style.cursor = distFromCenter < 140 ? 'pointer' : 'default';
 
         // Rings: follow mouse + proximity
         rings.forEach((ring) => {
@@ -386,9 +389,9 @@
     });
 
     dashboard.addEventListener('mouseleave', () => {
-      // Reset spindle
-      spindle.style.width = '';
-      spindle.style.height = '';
+      // Reset spindle to starting size
+      spindle.style.width = '80px';
+      spindle.style.height = '80px';
       spindle.querySelector('.spindle-text').style.opacity = '0';
       dashboard.style.cursor = '';
 
