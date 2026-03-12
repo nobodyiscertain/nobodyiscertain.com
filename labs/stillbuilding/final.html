@@ -40,6 +40,14 @@
       font-size: 1.15rem;
       color: #666;
       line-height: 1.7;
+      margin-bottom: 16px;
+      max-width: 520px;
+    }
+
+    .hero-sub-2 {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.7;
       margin-bottom: 48px;
       max-width: 520px;
     }
@@ -185,49 +193,14 @@
       line-height: 1.6;
     }
 
-    /* About */
-    .about {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 80px 40px;
-      border-top: 1px solid #151515;
-    }
-
-    .about-header {
-      display: flex;
-      gap: 24px;
-      align-items: flex-start;
-      margin-bottom: 20px;
-    }
-
-    .about-avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #333, #555);
-      flex-shrink: 0;
-    }
-
-    .about-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #ddd;
-    }
-
-    .about-title {
+    .topic-note {
+      margin-top: 24px;
       font-size: 0.82rem;
-      color: #555;
-      margin-top: 4px;
+      color: #333;
+      font-style: italic;
     }
 
-    .about p {
-      font-size: 0.95rem;
-      color: #555;
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    /* Who it's for */
+    /* Audience */
     .audience {
       max-width: 680px;
       margin: 0 auto;
@@ -264,31 +237,50 @@
       flex-shrink: 0;
     }
 
+    /* About */
+    .about {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .about h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .about p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
     /* Bottom CTA */
     .bottom-cta {
       max-width: 680px;
       margin: 0 auto;
       padding: 80px 40px;
       border-top: 1px solid #151515;
-      text-align: center;
     }
 
     .bottom-cta h2 {
-      font-size: 2rem;
-      font-weight: 700;
+      font-size: 1.6rem;
+      font-weight: 600;
       letter-spacing: -0.03em;
       margin-bottom: 12px;
-      color: #fff;
+      color: #ccc;
     }
 
     .bottom-cta p {
-      color: #444;
+      color: #555;
       margin-bottom: 32px;
-      font-size: 0.9rem;
-    }
-
-    .bottom-cta .signup-form {
-      margin: 0 auto;
+      font-size: 0.95rem;
+      line-height: 1.7;
     }
 
     .coaching-link {
@@ -313,7 +305,6 @@
     }
 
     footer p { font-size: 0.75rem; color: #222; }
-
     footer a { color: #333; text-decoration: none; }
     footer a:hover { color: #555; }
 
@@ -322,7 +313,6 @@
       .signup-form { flex-direction: column; }
       .pillar-grid { grid-template-columns: 1fr; }
       .problem, .pillars, .working-on, .about, .audience, .bottom-cta { padding: 60px 24px; }
-      .about-header { flex-direction: column; gap: 16px; }
     }
   </style>
 </head>
@@ -330,18 +320,19 @@
 
   <section class="hero">
     <h1>Still Building.</h1>
-    <p class="hero-sub">The leadership playbook is being rewritten. I'm a VP of Engineering managing 30 people, and the playbook I learned on doesn't work anymore. So I'm rewriting it in real time and sharing all of it.</p>
+    <p class="hero-sub">The leadership playbook is being rewritten. You can watch it happen.</p>
+    <p class="hero-sub-2">I'm a VP of Engineering managing 30 people, and the playbook I learned on doesn't work anymore. So I'm rewriting it in real time. Flattening teams, removing management layers, figuring out what engineering leadership looks like when the rules change every month. This isn't a finished framework. It's a living playbook that evolves as I learn. And I'm sharing all of it.</p>
     <form class="signup-form" action="#" method="post">
       <input type="email" placeholder="you@company.com" required>
-      <button type="submit">Get Early Access</button>
+      <button type="submit">Get early access</button>
     </form>
     <p class="signup-note">No spam. Just signal.</p>
   </section>
 
   <section class="problem">
     <h2>The old playbook is dead. Nobody's written the new one yet.</h2>
-    <p>The org chart you inherited was designed for cheap capital and big teams. That era is over. AI changed what one person can build. The coordination layers you staffed up? They're friction now.</p>
-    <p>But nobody hands you a manual for what comes next. I'm writing that manual. One week at a time. From inside the thing, not from the sidelines.</p>
+    <p>The org chart you inherited was designed for cheap capital and big teams. That era is over. AI changed what one person can build. The coordination layers you staffed up? They're friction now. But nobody hands you a manual for what comes next.</p>
+    <p>I'm writing that manual. One week at a time. From inside the thing, not from the sidelines.</p>
   </section>
 
   <section class="pillars">
@@ -365,7 +356,7 @@
     <h2>What I'm working through right now</h2>
     <div class="topic">
       <h3>How I manage 30 people with AI</h3>
-      <p>I built a "manager brain" that preps me for every 1-on-1, captures conversations, tracks follow-ups, and surfaces signals I'd miss. The management layer didn't get deleted. It got replaced by systems.</p>
+      <p>I built a "manager brain" that preps me for every 1-on-1, captures every conversation, tracks follow-ups, and surfaces signals I'd miss. The management layer didn't get deleted. It got replaced by systems.</p>
     </div>
     <div class="topic">
       <h3>Why I removed my entire EM layer</h3>
@@ -375,6 +366,7 @@
       <h3>The manager-of-one model</h3>
       <p>Every person owns their output, their growth, their judgment calls. Trust is the foundation, but trust isn't blind. AI gives you observability without micromanagement.</p>
     </div>
+    <p class="topic-note">These are real, current topics. Not hypotheticals. Not case studies from ten years ago.</p>
   </section>
 
   <section class="audience">
@@ -383,29 +375,24 @@
       <li>Your team is slower than it should be and you know the structure is the problem</li>
       <li>You're trying to figure out how AI changes your team, not just your product</li>
       <li>You're a builder at heart who got pulled into management and never quite let go</li>
-      <li>You want practical advice from someone in it, not someone who left five years ago to consult</li>
+      <li>You want practical, honest advice from someone in it, not someone who left five years ago to consult</li>
     </ul>
   </section>
 
   <section class="about">
-    <div class="about-header">
-      <div class="about-avatar"></div>
-      <div>
-        <div class="about-name">Jamie Wagner</div>
-        <div class="about-title">VP of Engineering at Kajabi</div>
-      </div>
-    </div>
-    <p>I've been building software since 2007 and leading teams since long before I had the title. I didn't set out to be a manager. I got pulled into it because I was good at building things, and someone figured I'd be good at helping other people build things too.</p>
-    <p>They were right. But I never stopped wanting to build. Now AI is changing everything about how we staff, structure, and lead engineering teams. I'm figuring it out in real time.</p>
+    <h2>Who's behind this?</h2>
+    <p>I'm Jamie. VP of Engineering at Kajabi. Managing 30 people and still writing code between 1-on-1s. I've been building software since 2007 and leading teams since long before I had the title.</p>
+    <p>I didn't set out to be a manager. I got pulled into it because I was good at building things, and someone figured I'd be good at helping other people build things too. They were right. But I never stopped wanting to build.</p>
+    <p>Now AI is changing everything about how we staff, structure, and lead engineering teams. I'm figuring it out in real time and sharing what I learn along the way.</p>
     <p>No thought-leader fluff. No frameworks named after Greek gods. Just honest notes from someone in the middle of it.</p>
   </section>
 
   <section class="bottom-cta">
-    <h2>Want in?</h2>
-    <p>Sign up for early access. Course, insights, honest takes on eng leadership.</p>
+    <h2>I'm building it in real time.</h2>
+    <p>What Still Building becomes (newsletter, course, community) depends on what engineering leaders actually need right now. I'm figuring that out through conversations, not assumptions. Sign up to be one of the first to get access when it's ready.</p>
     <form class="signup-form" action="#" method="post">
       <input type="email" placeholder="you@company.com" required>
-      <button type="submit">Get Early Access</button>
+      <button type="submit">Get early access</button>
     </form>
     <div class="coaching-link">
       <a href="#">Already know you want to talk? Book a session →</a>
@@ -413,7 +400,7 @@
   </section>
 
   <footer>
-    <p>Still Building · <a href="https://nobodyiscertain.com">Jamie Wagner</a></p>
+    <p>Still Building · <a href="https://nobodyiscertain.com">Jamie Wagner</a> · nobodyiscertain.com</p>
   </footer>
 
 </body>
