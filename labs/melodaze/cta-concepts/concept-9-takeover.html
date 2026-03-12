@@ -371,6 +371,14 @@
       isMouseOnDashboard = true;
     });
 
+    // Smooth spindle size tracking
+    let currentSpindleSize = 80;
+    let currentTextOp = 0;
+    const textEl = spindle.querySelector('.spindle-text');
+
+    // Use CSS transition on spindle for smooth grow/shrink
+    spindle.style.transition = 'width 0.35s cubic-bezier(0.23, 1, 0.32, 1), height 0.35s cubic-bezier(0.23, 1, 0.32, 1)';
+
     dashboard.addEventListener('mousemove', (e) => {
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
@@ -379,37 +387,35 @@
           Math.pow(e.clientX - center.x, 2) + Math.pow(e.clientY - center.y, 2)
         );
 
-        const maxDist = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2)) * 0.4;
-        const closeness = Math.max(0, 1 - distFromCenter / maxDist);
+        // Spindle: stays at 80px until within ~240px of center, then snaps up
+        const growZone = 240;
+        let targetSize = 80;
+        if (distFromCenter < growZone) {
+          // Quick ramp up as you enter the zone
+          const zoneCloseness = 1 - (distFromCenter / growZone);
+          targetSize = 80 + zoneCloseness * zoneCloseness * 160;
+        }
 
-        // Spindle grows: 80px → 240px as mouse approaches
-        const targetSize = 80 + closeness * closeness * 160;
-        const currentSize = parseFloat(spindle.dataset.size) || 80;
-        const newSize = Math.max(currentSize, targetSize);
-        spindle.dataset.size = newSize;
-        spindle.style.width = newSize + 'px';
-        spindle.style.height = newSize + 'px';
+        // Let CSS transition handle the smooth grow AND shrink
+        spindle.style.width = targetSize + 'px';
+        spindle.style.height = targetSize + 'px';
 
-        // Show text inside spindle when large enough
-        const textEl = spindle.querySelector('.spindle-text');
-        const currentTextOp = parseFloat(spindle.dataset.textOp) || 0;
-        const targetTextOp = closeness > 0.5 ? Math.min(1, (closeness - 0.5) / 0.2) : 0;
-        const newTextOp = Math.max(currentTextOp, targetTextOp);
-        spindle.dataset.textOp = newTextOp;
-        textEl.style.opacity = newTextOp;
+        // Text: show when spindle is big enough (in the zone)
+        const targetTextOp = distFromCenter < growZone * 0.5
+          ? Math.min(1, (1 - distFromCenter / (growZone * 0.5)))
+          : 0;
+        textEl.style.opacity = targetTextOp;
 
-        // Cursor when close
+        // Cursor
         dashboard.style.cursor = distFromCenter < 140 ? 'pointer' : 'default';
 
         // Rings: immediate response, stronger effect
         rings.forEach((ring) => {
           const distFromRing = Math.abs(distFromCenter - ring.radius);
-          // Sharper proximity — tighter falloff, more dramatic
           const proximity = Math.max(0, 1 - distFromRing / 100);
-          // Stronger opacity range
-          const opacity = 0.1 + proximity * 0.75 + closeness * 0.2;
+          const closeness = Math.max(0, 1 - distFromCenter / (Math.max(window.innerWidth, window.innerHeight) * 0.5));
+          const opacity = 0.1 + proximity * 0.75 + closeness * 0.15;
           ring.el.style.opacity = Math.min(1, opacity);
-          // More contrast in the grays
           const gray = Math.round(225 - proximity * 60 - closeness * 20);
           ring.el.style.borderColor = `rgb(${gray}, ${gray}, ${gray})`;
         });
@@ -419,12 +425,10 @@
     dashboard.addEventListener('mouseleave', () => {
       isMouseOnDashboard = false;
 
-      // Reset spindle
+      // Shrink spindle back
       spindle.style.width = '80px';
       spindle.style.height = '80px';
-      spindle.dataset.size = '80';
-      spindle.dataset.textOp = '0';
-      spindle.querySelector('.spindle-text').style.opacity = '0';
+      textEl.style.opacity = '0';
       dashboard.style.cursor = '';
     });
 
@@ -476,9 +480,7 @@
       isMouseOnDashboard = false;
       spindle.style.width = '80px';
       spindle.style.height = '80px';
-      spindle.dataset.size = '80';
-      spindle.dataset.textOp = '0';
-      spindle.querySelector('.spindle-text').style.opacity = '0';
+      textEl.style.opacity = '0';
     }
 
     // Touch
