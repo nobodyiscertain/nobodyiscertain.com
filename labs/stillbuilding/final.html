@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Still Building — Engineering Leadership for the AI Era</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔨</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Hero */
+    .hero {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 160px 40px 100px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      line-height: 1.0;
+      margin-bottom: 28px;
+      color: #fff;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      max-width: 520px;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 10px;
+      max-width: 440px;
+    }
+
+    .signup-form input {
+      flex: 1;
+      padding: 14px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 6px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .signup-form input::placeholder { color: #444; }
+    .signup-form input:focus { border-color: #555; }
+
+    .signup-form button {
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #fff;
+      color: #0a0a0a;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .signup-form button:hover { opacity: 0.85; }
+
+    .signup-note {
+      margin-top: 12px;
+      font-size: 0.75rem;
+      color: #333;
+    }
+
+    /* Problem */
+    .problem {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .problem h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .problem p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .problem p:last-child { margin-bottom: 0; }
+
+    /* Pillars */
+    .pillars {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .pillar {
+      padding: 32px;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .pillar:hover { border-color: #333; }
+
+    .pillar h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #ddd;
+    }
+
+    .pillar p {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* Working on */
+    .working-on {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .working-on h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      color: #ccc;
+    }
+
+    .topic {
+      padding: 24px 0;
+      border-bottom: 1px solid #151515;
+    }
+
+    .topic:last-child { border-bottom: none; }
+
+    .topic h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #ddd;
+    }
+
+    .topic p {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* About */
+    .about {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .about-header {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .about-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #333, #555);
+      flex-shrink: 0;
+    }
+
+    .about-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #ddd;
+    }
+
+    .about-title {
+      font-size: 0.82rem;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .about p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    /* Who it's for */
+    .audience {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+    }
+
+    .audience h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      color: #ccc;
+    }
+
+    .audience ul {
+      list-style: none;
+    }
+
+    .audience li {
+      padding: 14px 0;
+      border-bottom: 1px solid #151515;
+      font-size: 0.92rem;
+      color: #555;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .audience li::before {
+      content: '→';
+      color: #444;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    /* Bottom CTA */
+    .bottom-cta {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      border-top: 1px solid #151515;
+      text-align: center;
+    }
+
+    .bottom-cta h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .bottom-cta p {
+      color: #444;
+      margin-bottom: 32px;
+      font-size: 0.9rem;
+    }
+
+    .bottom-cta .signup-form {
+      margin: 0 auto;
+    }
+
+    .coaching-link {
+      margin-top: 20px;
+      font-size: 0.85rem;
+    }
+
+    .coaching-link a {
+      color: #444;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .coaching-link a:hover { color: #aaa; }
+
+    footer {
+      text-align: center;
+      padding: 32px 40px;
+      border-top: 1px solid #111;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    footer p { font-size: 0.75rem; color: #222; }
+
+    footer a { color: #333; text-decoration: none; }
+    footer a:hover { color: #555; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 100px 24px 60px; }
+      .signup-form { flex-direction: column; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .problem, .pillars, .working-on, .about, .audience, .bottom-cta { padding: 60px 24px; }
+      .about-header { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>Still Building.</h1>
+    <p class="hero-sub">The leadership playbook is being rewritten. I'm a VP of Engineering managing 30 people, and the playbook I learned on doesn't work anymore. So I'm rewriting it in real time and sharing all of it.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+    <p class="signup-note">No spam. Just signal.</p>
+  </section>
+
+  <section class="problem">
+    <h2>The old playbook is dead. Nobody's written the new one yet.</h2>
+    <p>The org chart you inherited was designed for cheap capital and big teams. That era is over. AI changed what one person can build. The coordination layers you staffed up? They're friction now.</p>
+    <p>But nobody hands you a manual for what comes next. I'm writing that manual. One week at a time. From inside the thing, not from the sidelines.</p>
+  </section>
+
+  <section class="pillars">
+    <div class="pillar-grid">
+      <div class="pillar">
+        <h3>Still building products.</h3>
+        <p>AI changed what one person can build. The leaders winning right now aren't delegating from a distance. They're hands-on again. Building prototypes between meetings. Shipping alongside their teams.</p>
+      </div>
+      <div class="pillar">
+        <h3>Still building teams.</h3>
+        <p>Flatter structures, more autonomy, fewer layers. The teams that move fastest are designed for what's next, not what worked five years ago.</p>
+      </div>
+      <div class="pillar">
+        <h3>Still building builders.</h3>
+        <p>The best thing a leader can do is make themselves unnecessary. Give engineers agency. Give them AI. Give them space to own their work. Then get out of the way.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="working-on">
+    <h2>What I'm working through right now</h2>
+    <div class="topic">
+      <h3>How I manage 30 people with AI</h3>
+      <p>I built a "manager brain" that preps me for every 1-on-1, captures conversations, tracks follow-ups, and surfaces signals I'd miss. The management layer didn't get deleted. It got replaced by systems.</p>
+    </div>
+    <div class="topic">
+      <h3>Why I removed my entire EM layer</h3>
+      <p>We went from traditional teams with engineering managers to a flat org with 30 direct reports. Some people thrived. Others struggled. Here's what actually happened.</p>
+    </div>
+    <div class="topic">
+      <h3>The manager-of-one model</h3>
+      <p>Every person owns their output, their growth, their judgment calls. Trust is the foundation, but trust isn't blind. AI gives you observability without micromanagement.</p>
+    </div>
+  </section>
+
+  <section class="audience">
+    <h2>This is for you if</h2>
+    <ul>
+      <li>Your team is slower than it should be and you know the structure is the problem</li>
+      <li>You're trying to figure out how AI changes your team, not just your product</li>
+      <li>You're a builder at heart who got pulled into management and never quite let go</li>
+      <li>You want practical advice from someone in it, not someone who left five years ago to consult</li>
+    </ul>
+  </section>
+
+  <section class="about">
+    <div class="about-header">
+      <div class="about-avatar"></div>
+      <div>
+        <div class="about-name">Jamie Wagner</div>
+        <div class="about-title">VP of Engineering at Kajabi</div>
+      </div>
+    </div>
+    <p>I've been building software since 2007 and leading teams since long before I had the title. I didn't set out to be a manager. I got pulled into it because I was good at building things, and someone figured I'd be good at helping other people build things too.</p>
+    <p>They were right. But I never stopped wanting to build. Now AI is changing everything about how we staff, structure, and lead engineering teams. I'm figuring it out in real time.</p>
+    <p>No thought-leader fluff. No frameworks named after Greek gods. Just honest notes from someone in the middle of it.</p>
+  </section>
+
+  <section class="bottom-cta">
+    <h2>Want in?</h2>
+    <p>Sign up for early access. Course, insights, honest takes on eng leadership.</p>
+    <form class="signup-form" action="#" method="post">
+      <input type="email" placeholder="you@company.com" required>
+      <button type="submit">Get Early Access</button>
+    </form>
+    <div class="coaching-link">
+      <a href="#">Already know you want to talk? Book a session →</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Still Building · <a href="https://nobodyiscertain.com">Jamie Wagner</a></p>
+  </footer>
+
+</body>
+</html>
