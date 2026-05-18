@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>QJ Services — design b</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html,body { margin:0; padding:0; }
+  body { color:#111; -webkit-font-smoothing: antialiased; }
+  img { max-width:100%; display:block; }
+  button { cursor:pointer; font: inherit; }
+  input,select,textarea,button { font: inherit; }
+  a { color: inherit; }
+
+  /* ---------- Top fixed nav for switching comps ---------- */
+  .comp-nav {
+    position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(20,20,20,0.85);
+    color: #fff;
+    border-radius: 999px;
+    padding: 6px 10px;
+    display: flex; align-items: center; gap: 4px;
+    backdrop-filter: blur(10px);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  }
+  .comp-nav span { padding: 0 8px; opacity: 0.6; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .comp-nav a {
+    color: #fff; text-decoration: none;
+    padding: 6px 12px; border-radius: 999px;
+    transition: background 0.15s ease;
+  }
+  .comp-nav a:hover { background: rgba(255,255,255,0.12); }
+  .comp-nav a.active { background: #fff; color: #111; }
+
+  /* ---------- Section wrapper ---------- */
+  .comp {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .comp-divider {
+    height: 60px;
+    background: #0a0a0a;
+    color: #888;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* =========================================================
+     COMP A — The Trusted Neighbor
+     Soft, warm, neighborhood-kid aesthetic
+     ========================================================= */
+  .comp-a {
+    background: linear-gradient(180deg, #faf6ee 0%, #f3ecdb 100%);
+    color: #2a2a26;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    padding: 80px 24px 80px;
+  }
+  .comp-a .container { max-width: 1080px; margin: 0 auto; }
+  .comp-a .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    margin-bottom: 96px;
+  }
+  .comp-a .hero-photo {
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(50,40,20,0.25);
+    aspect-ratio: 4/5;
+    background: #ddd;
+  }
+  .comp-a .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .comp-a .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    color: #5a7a50;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 18px;
+  }
+  .comp-a h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(44px, 6vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 18px;
+    color: #1f2a1a;
+  }
+  .comp-a h1 em {
+    font-style: italic;
+    color: #3d5a35;
+  }
+  .comp-a .sub {
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.5;
+    color: #4a4a42;
+    margin-bottom: 32px;
+    max-width: 460px;
+  }
+  .comp-a .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .comp-a .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #2f4a28;
+    color: #f8f3e3;
+    border: none;
+    padding: 17px 28px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .comp-a .btn:hover { background: #243a1f; transform: translateY(-1px); }
+  .comp-a .meta {
+    font-size: 14px;
+    color: #6b6b5f;
+  }
+
+  .comp-a .services {
+    background: #fff;
+    border-radius: 28px;
+    padding: 48px 56px;
+    box-shadow: 0 12px 40px -16px rgba(50,40,20,0.18);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .comp-a .services h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 32px;
+    margin: 0 0 8px;
+    color: #1f2a1a;
+  }
+  .comp-a .services > p {
+    color: #6b6b5f; margin: 0 0 32px; font-size: 15px;
+  }
+  .comp-a .service-list { display: flex; flex-direction: column; }
+  .comp-a .service {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 22px 0;
+    border-top: 1px solid #eee5cf;
+  }
+  .comp-a .service:first-child { border-top: 0; padding-top: 8px; }
+  .comp-a .service-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: #f3ecdb;
+    color: #3d5a35;
+    display: grid; place-items: center;
+  }
+  .comp-a .service-name { font-weight: 600; font-size: 18px; color: #1f2a1a; }
+  .comp-a .service-desc { color: #6b6b5f; font-size: 14px; margin-top: 2px; }
+  .comp-a .service-price {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: #2f4a28;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .comp-a .pill-new {
+    display: inline-block;
+    background: #f6e3a8;
+    color: #6e4d10;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ---------- Form (shared shell, themed per comp) ---------- */
+  .form-card {
+    margin-top: 64px;
+    border-radius: 28px;
+    padding: 40px 48px 44px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    border: 1px solid rgba(0,0,0,0.12);
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 16px;
+    color: #111;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    width: 100%;
+  }
+  .field textarea { min-height: 90px; resize: vertical; }
+
+  /* Checkbox group inside form field */
+  .service-checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    margin-top: 8px;
+  }
+  .service-checks label.check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: normal;
+    cursor: pointer;
+    padding: 6px 4px;
+  }
+  .service-checks label.check input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: currentColor;
+  }
+  .comp-c .service-checks label.check {
+    color: #d4d4d4;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: #2f4a28;
+    box-shadow: 0 0 0 4px rgba(47,74,40,0.12);
+  }
+  .form-actions { margin-top: 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .form-success {
+    display: none;
+    padding: 20px 22px;
+    border-radius: 14px;
+    background: #e6f1dd;
+    color: #2f4a28;
+    font-weight: 500;
+    margin-top: 22px;
+  }
+  .form-success.show { display: block; }
+
+  .comp-a .form-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 12px 40px -16px rgba(50,40,20,0.18);
+  }
+  .comp-a .form-card h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 32px;
+    margin: 0 0 8px;
+    color: #1f2a1a;
+  }
+  .comp-a .form-card > p {
+    color: #6b6b5f;
+    margin: 0 0 24px;
+    font-size: 15px;
+  }
+  .comp-a .footer-note {
+    text-align: center;
+    margin-top: 48px;
+    color: #6b6b5f;
+    font-size: 14px;
+  }
+
+  /* =========================================================
+     COMP B — Texas Summer
+     Playful, colorful, summery
+     ========================================================= */
+  .comp-b {
+    background: #fffaf1;
+    color: #1d2a3a;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    padding: 0 0 80px;
+  }
+  .comp-b .hero-b {
+    background:
+      linear-gradient(180deg, rgba(255,250,241,0) 0%, rgba(255,250,241,0) 70%, rgba(255,250,241,0.92) 100%),
+      url('hero-b.jpg') center 20% / cover no-repeat,
+      #87ceae;
+    color: #1d2a3a;
+    padding: 120px 24px 140px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 78vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  /* legibility scrim behind text */
+  .comp-b .hero-b::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 45%;
+    background: linear-gradient(180deg, rgba(29,42,58,0) 0%, rgba(29,42,58,0.55) 70%, rgba(29,42,58,0.7) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .comp-b .hero-b .inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+  .comp-b .brand {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(64px, 12vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: #fffaf1;
+    margin: 0;
+    text-shadow: 0 4px 18px rgba(0,0,0,0.45);
+  }
+  .comp-b .tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(20px, 2.5vw, 28px);
+    color: #fff5e0;
+    margin: 20px 0 0;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.55);
+  }
+  .comp-b .hero-b .cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 36px;
+    background: #fffaf1;
+    color: #1d2a3a;
+    padding: 18px 32px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(29,42,58,0.3);
+    transition: transform 0.15s;
+  }
+  .comp-b .hero-b .cta:hover { transform: translateY(-2px); }
+
+  .comp-b .container { max-width: 1100px; margin: 0 auto; padding: 80px 24px 0; }
+  .comp-b h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(32px, 4vw, 44px);
+    margin: 0 0 8px;
+    color: #1d2a3a;
+    letter-spacing: -0.01em;
+  }
+  .comp-b .sub-h2 {
+    color: #5a6b7d;
+    font-size: 17px;
+    margin: 0 0 40px;
+  }
+
+  .service-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .service-card {
+    border-radius: 22px;
+    padding: 28px 26px 26px;
+    position: relative;
+    overflow: hidden;
+    color: #1d2a3a;
+    transition: transform 0.2s;
+  }
+  .service-card:hover { transform: translateY(-3px); }
+  .service-card .icon-wrap {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.55);
+    display: grid; place-items: center;
+    margin-bottom: 22px;
+  }
+  .service-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .service-card .price {
+    font-weight: 700;
+    font-size: 17px;
+    margin-top: 14px;
+  }
+  .service-card .blurb {
+    font-size: 14px;
+    color: #2a3a4d;
+    opacity: 0.85;
+    line-height: 1.45;
+  }
+  .service-card .new-badge {
+    position: absolute;
+    top: 18px; right: 18px;
+    background: #1d2a3a;
+    color: #fff35e;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .card-mow   { background: #b3d99f; }
+  .card-trash { background: #f5d175; }
+  .card-poop  { background: #f4a698; }
+  .card-pet   { background: #9dc7e0; }
+  .card-plant { background: #c1e0a8; }
+  .card-area  { background: #ffe6a8; }
+
+  .comp-b .form-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 12px 40px -16px rgba(20,30,50,0.15);
+  }
+  .comp-b .form-card h2 { margin-bottom: 6px; }
+  .comp-b .form-card > p { color: #5a6b7d; margin: 0 0 26px; font-size: 15px; }
+  .comp-b .field input:focus,
+  .comp-b .field select:focus,
+  .comp-b .field textarea:focus {
+    border-color: #ff9c7a;
+    box-shadow: 0 0 0 4px rgba(255,156,122,0.25);
+  }
+  .comp-b .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #1d2a3a;
+    color: #fff35e;
+    border: none;
+    padding: 17px 30px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+  }
+
+  /* =========================================================
+     COMP C — QJ Type System
+     Monochrome, app-feel, big type
+     ========================================================= */
+  .comp-c {
+    background: #0a0a0a;
+    color: #f4f4f0;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    padding: 0 0 100px;
+  }
+  .comp-c .hero-c {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 80px 32px 60px;
+    position: relative;
+  }
+  .comp-c .topbar {
+    position: absolute; top: 80px; left: 32px; right: 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .comp-c .topbar .dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #4cff8f;
+    box-shadow: 0 0 12px rgba(76,255,143,0.7);
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .comp-c .mega {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(80px, 22vw, 320px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    margin: 0;
+    color: #f4f4f0;
+    text-align: center;
+  }
+  .comp-c .mega .accent { color: #4cff8f; }
+  .comp-c .hero-tagline {
+    text-align: center;
+    margin-top: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(13px, 1.4vw, 16px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #888;
+  }
+  .comp-c .hero-tagline span {
+    display: inline-block;
+    padding: 0 8px;
+    color: #f4f4f0;
+  }
+  .comp-c .hero-cta-row {
+    display: flex; justify-content: center;
+    margin-top: 56px;
+  }
+  .comp-c .hero-cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: #4cff8f;
+    color: #0a0a0a;
+    padding: 20px 34px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .comp-c .hero-cta:hover { background: #6fffa6; transform: translateY(-2px); }
+  .comp-c .bottombar {
+    margin-top: 56px;
+    border-top: 1px solid #1c1c1c;
+    padding-top: 24px;
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #555;
+  }
+  .comp-c .container { max-width: 1100px; margin: 0 auto; padding: 80px 32px 0; }
+  .comp-c .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #4cff8f;
+    margin-bottom: 16px;
+  }
+  .comp-c .section-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 48px;
+    color: #f4f4f0;
+  }
+
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .price-table tr {
+    border-top: 1px solid #1c1c1c;
+  }
+  .price-table tr:last-child { border-bottom: 1px solid #1c1c1c; }
+  .price-table td {
+    padding: 26px 16px;
+    vertical-align: middle;
+  }
+  .price-table td:first-child { padding-left: 0; width: 60px; }
+  .price-table td:last-child { padding-right: 0; text-align: right; }
+  .price-table .row-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: #131313;
+    color: #4cff8f;
+    display: grid; place-items: center;
+  }
+  .price-table .row-name {
+    font-size: 20px;
+    font-weight: 600;
+    color: #f4f4f0;
+  }
+  .price-table .row-desc {
+    font-size: 13px;
+    color: #888;
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .price-table .row-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    color: #4cff8f;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .price-table .row-new {
+    display: inline-block;
+    background: rgba(76,255,143,0.15);
+    color: #4cff8f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-left: 12px;
+    vertical-align: middle;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .comp-c .form-card {
+    background: #131313;
+    border: 1px solid #1c1c1c;
+    margin-top: 80px;
+  }
+  .comp-c .form-card h2 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 36px;
+    margin: 0 0 8px;
+    color: #f4f4f0;
+    letter-spacing: -0.01em;
+  }
+  .comp-c .form-card > p {
+    color: #888;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 28px;
+  }
+  .comp-c .field label { color: #888; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .comp-c .field input,
+  .comp-c .field select,
+  .comp-c .field textarea {
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    color: #f4f4f0;
+    border-radius: 6px;
+  }
+  .comp-c .field input:focus,
+  .comp-c .field select:focus,
+  .comp-c .field textarea:focus {
+    border-color: #4cff8f;
+    box-shadow: 0 0 0 3px rgba(76,255,143,0.18);
+  }
+  .comp-c .btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #4cff8f;
+    color: #0a0a0a;
+    border: none;
+    padding: 18px 32px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+  }
+  .comp-c .form-success { background: #0f2018; color: #4cff8f; }
+  .comp-c .footer-c {
+    margin-top: 64px;
+    border-top: 1px solid #1c1c1c;
+    padding-top: 24px;
+    display: flex; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #555;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 880px) {
+    .comp-a .hero { grid-template-columns: 1fr; gap: 36px; }
+    .comp-a .hero-photo { max-width: 420px; margin: 0 auto; }
+    .comp-a .services,
+    .comp-a .form-card,
+    .comp-b .form-card,
+    .comp-c .form-card { padding: 32px 24px; }
+    .service-cards { grid-template-columns: 1fr 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .comp-a { padding: 80px 16px 60px; }
+    .comp-b .container { padding: 60px 16px 0; }
+    .comp-c .container { padding: 60px 20px 0; }
+    .comp-c .hero-c { padding: 100px 20px 60px; }
+    .comp-c .topbar { left: 20px; right: 20px; top: 100px; }
+    .comp-c .price-table td { padding: 20px 8px; }
+    .comp-c .price-table .row-name { font-size: 17px; }
+    .comp-nav { font-size: 12px; padding: 5px 6px; }
+    .comp-nav span { display: none; }
+    .comp-nav a { padding: 6px 10px; white-space: nowrap; }
+  }
+  @media (max-width: 420px) {
+    .comp-nav a { padding: 6px 9px; font-size: 11px; }
+  }
+  @media (max-width: 520px) {
+    .service-cards { grid-template-columns: 1fr; }
+    .comp-a h1 { font-size: 42px; }
+    .comp-b .brand { font-size: 64px; }
+    .comp-c .mega { font-size: 26vw; }
+    .comp-c .bottombar { flex-direction: column; gap: 8px; align-items: flex-start; }
+    .comp-c .footer-c { flex-direction: column; gap: 8px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+<!-- ================= COMP B ================= -->
+<section class="comp comp-b" id="comp-b">
+  <div class="hero-b">
+    <div class="inner">
+      <h1 class="brand">QJ Services</h1>
+      <p class="tagline">Quinn's summer hustle — supporting local kids' dreams.</p>
+      <a href="#schedule-b" class="cta">
+        Book me for the summer
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Four things I do well</h2>
+    <p class="sub-h2">Yards, trash, and plants — pick what your summer needs.</p>
+    <p style="background:#ffeed4;border-left:3px solid #e89834;padding:12px 16px;border-radius:6px;color:#5a3f1a;font-size:14px;line-height:1.55;margin:0 0 32px;max-width:760px;">
+      <strong>About the prices:</strong> these are starting prices. I'll come check out your place — giant yards, lots of dogs, or anything tricky might be a little more. I'll quote you before I start.
+    </p>
+
+    <div class="service-cards">
+      <div class="service-card card-mow">
+        <div class="icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d2a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16h20"/><path d="M5 16V10h6l3-3h6v6"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+        </div>
+        <h3>Lawn mowing</h3>
+        <p class="blurb">Mowed, edged, blown clean. Bag the clippings if you want.</p>
+        <div class="price">from $30</div>
+      </div>
+
+      <div class="service-card card-trash">
+        <div class="icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d2a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </div>
+        <h3>Trash can cleaning</h3>
+        <p class="blurb">Scrubbed, rinsed, smelling fine. Right in your driveway.</p>
+        <div class="price">from $5 per can</div>
+      </div>
+
+      <div class="service-card card-poop">
+        <div class="icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d2a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="14" r="2"/><circle cx="4" cy="8" r="2"/><circle cx="6" cy="14" r="2"/><path d="M8 17.5C8 19.4 9.6 21 11.5 21h1c1.9 0 3.5-1.6 3.5-3.5 0-2.4-3-3.5-4-3.5s-4 1.1-4 3.5z"/></svg>
+        </div>
+        <h3>Dog poop pickup</h3>
+        <p class="blurb">Yards scooped &amp; bagged. Weekly or just once.</p>
+        <div class="price">from $10 per yard</div>
+      </div>
+
+      <div class="service-card card-plant">
+        <span class="new-badge">New</span>
+        <div class="icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d2a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h12v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M15 11l5-3v6z"/><path d="M7 9V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v3"/></svg>
+        </div>
+        <h3>Plant watering</h3>
+        <p class="blurb">Outdoor plants &amp; gardens while you travel. Texted updates.</p>
+        <div class="price">from $20 per session</div>
+      </div>
+
+      <div class="service-card card-area">
+        <div class="icon-wrap">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d2a3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-9 8-13a8 8 0 1 0-16 0c0 4 8 13 8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        </div>
+        <h3>The neighborhood</h3>
+        <p class="blurb">Grey Rock Ridge · Circle C, Austin. If we're close, I'm in. Text me to check.</p>
+        <div class="price">Walking distance &amp; bike-able</div>
+      </div>
+    </div>
+
+    <!-- Form B -->
+    <div class="form-card" id="schedule-b">
+      <h2>Get on the schedule</h2>
+      <p>Drop me a line. I'll text back to set up a time.</p>
+      <!-- TODO: wire to Tally or Formspree -->
+      <form class="qj-form" data-comp="B">
+        <div class="form-grid">
+          <div class="field">
+            <label for="b-name">Your name</label>
+            <input id="b-name" name="name" type="text" required placeholder="Jane Neighbor">
+          </div>
+          <div class="field">
+            <label for="b-phone">Phone</label>
+            <input id="b-phone" name="phone" type="tel" placeholder="(512) 555-0199">
+          </div>
+          <div class="field">
+            <label for="b-email">Email</label>
+            <input id="b-email" name="email" type="email" placeholder="you@example.com">
+          </div>
+          <div class="field full">
+            <label for="b-address">Address</label>
+            <input id="b-address" name="address" type="text" required placeholder="123 Maple Ln, Austin, TX">
+          </div>
+          <div class="field full">
+            <label>What can I help with? <span style="font-weight:400;color:#7a8a9d;">(pick all that apply)</span></label>
+            <div class="service-checks" style="display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:6px;">
+              <label class="check"><input type="checkbox" name="services[]" value="Lawn mowing"> Lawn mowing</label>
+              <label class="check"><input type="checkbox" name="services[]" value="Trash can cleaning"> Trash can cleaning</label>
+              <label class="check"><input type="checkbox" name="services[]" value="Dog poop pickup"> Dog poop pickup</label>
+              <label class="check"><input type="checkbox" name="services[]" value="Plant watering"> Plant watering</label>
+            </div>
+          </div>
+          <div class="field full">
+            <label for="b-date">When do you need it done?</label>
+            <input id="b-date" name="when" type="text" placeholder="ASAP, next weekend, every other Saturday, etc.">
+          </div>
+          <div class="field full">
+            <label for="b-notes">Anything I should know</label>
+            <textarea id="b-notes" name="notes" placeholder="Gate code, yard size, pet names, etc."></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">Send request</button>
+          <span style="color:#5a6b7d;font-size:14px">I usually reply same-day.</span>
+        </div>
+        <div class="form-success" role="status">Thanks! I'll text you back soon. — Quinn</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<script>
+  // Fake submit success
+  document.querySelectorAll('.qj-form').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var s = f.querySelector('.form-success');
+      if (s) {
+        s.classList.add('show');
+        s.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      f.querySelectorAll('input, select, textarea').forEach(function (el) {
+        if (el.type !== 'submit') el.value = '';
+      });
+    });
+  });
+
+  // Highlight active comp in fixed nav as user scrolls
+  var navLinks = document.querySelectorAll('.comp-nav a');
+  var sections = ['comp-a','comp-b','comp-c'].map(function (id) {
+    return document.getElementById(id);
+  });
+  function onScroll() {
+    var scrollY = window.scrollY + window.innerHeight * 0.35;
+    var activeId = 'comp-a';
+    sections.forEach(function (s) {
+      if (s && s.offsetTop <= scrollY) activeId = s.id;
+    });
+    navLinks.forEach(function (a) {
+      a.classList.toggle('active', a.dataset.target === activeId);
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body>
+</html>
