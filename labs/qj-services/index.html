@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>QJ Services — design directions</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #0c0c0c; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px; z-index: 10;
+      display: flex; align-items: center; gap: 6px; padding: 0 14px;
+      background: #111; border-bottom: 1px solid #222; color: #e8e8e8;
+    }
+    .bar .brand { font-weight: 600; font-size: 14px; letter-spacing: 0.04em; margin-right: 12px; white-space: nowrap; }
+    .bar .brand .muted { color: #6f6f6f; font-weight: 400; }
+    .tabs { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tab {
+      appearance: none; border: 1px solid #2a2a2a; background: transparent; color: #cfcfcf;
+      padding: 7px 12px; border-radius: 999px; font-size: 12px; cursor: pointer; white-space: nowrap;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    .tab b { font-weight: 700; margin-right: 5px; }
+    .tab:hover { border-color: #444; }
+    .tab.active { background: #fff; color: #111; border-color: #fff; }
+    iframe { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; width: 100%; height: calc(100% - 56px); border: 0; background: #fff; }
+    @media (max-width: 600px) {
+      .bar { gap: 4px; padding: 0 8px; }
+      .bar .brand { font-size: 12px; margin-right: 6px; }
+      .tab .label { display: none; }
+      .tab { padding: 7px 11px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <span class="brand">QJ Services <span class="muted">— directions</span></span>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-src="design-a.html"><b>A</b><span class="label">The Trusted Neighbor</span></button>
+      <button class="tab" data-src="design-b.html"><b>B</b><span class="label">Texas Summer</span></button>
+      <button class="tab" data-src="design-c.html"><b>C</b><span class="label">Type System</span></button>
+    </div>
+  </div>
+  <iframe id="view" src="design-a.html" title="QJ Services design preview"></iframe>
+  <script>
+    const tabs = document.querySelectorAll('.tab');
+    const view = document.getElementById('view');
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      view.src = t.dataset.src;
+    }));
+  </script>
+</body>
+</html>
